@@ -131,6 +131,8 @@ in
 	extraTmuxConf = ''
 		bind-key -T copy-mode-vi 'v' send -X begin-selection
 		bind-key -T copy-mode-vi 'y' send -X copy-selection-and-cancel
+    bind s split-window -c "#{pane_current_path}"
+    bind v split-window -h -c "#{pane_current_path}"
 	'';
   };
 
@@ -215,7 +217,7 @@ in
     home = "/home/max";
     isNormalUser = true;
     extraGroups = [ "wheel" "audio" "video" "sound" "pulse" "networkmanager" ]; # Enable ‘sudo’ for the user.
-    shell = pkgs.fish;
+    shell = pkgs.bash;
     hashedPassword = passwords.max;
   };
 
