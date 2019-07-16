@@ -12,6 +12,7 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ( ./. + "/${hostname}/hardware-configuration.nix" )
+      ./packages.nix
     ];
 
   nixpkgs.config.allowUnfree = true;
@@ -51,65 +52,6 @@ in
   # Set your time zone.
   time.timeZone = "Europe/London";
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-  	#-- system stuff --#
-  	wget 
-	rclone # working with cloud storage
-	networkmanager 
-	git 
-	stow 
-	pavucontrol 
-	light # controls the backlight
-	ripgrep 
-	fd
-	zip
-	unzip
-	unrar
-	ranger
-	tree
-	exa # an ls replacement
-	nix-index
-	htop
-	imagemagick
-	usbutils
-	git-crypt
-	gnupg
-	#-- programming --#
-	vim 
-	emacs
-	neovim
-	(python3.withPackages(ps: with ps; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy flake8 yapf pyqt5 pyqtgraph rope ]))
-	binutils
-	gcc
-	gnumake
-	openssl
-	texlive.combined.scheme-full
-	qt5.full
-	#-- desktop --#
-	sway 
-	firefox 
-	google-chrome
-	gimp 
-	blender 
-	lxappearance-gtk3
-	adapta-gtk-theme
-	numix-icon-theme
-	godot
-	zathura
-	dropbox-cli
-	mpv
-	transmission-gtk
-	playerctl # to see what music is playing
-	google-play-music-desktop-player
-	rclone-browser # qt front-end for rclone
-	steam
-	steam-run-native
-	gzdoom # doom port
-	qtcreator
-  ];
-  
   # Installing fonts
   fonts.fonts = with pkgs; [
 	noto-fonts
@@ -204,11 +146,9 @@ in
  
   # Enable sway
   programs.sway.enable = true;
+
   # Enable light
   programs.light.enable = true;
-
-  # Enable fish
-  programs.fish.enable = true;
 
   # Enable the emacs daemon
   services.emacs.enable = true;
