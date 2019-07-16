@@ -6,11 +6,12 @@
 
 let 
 	passwords = import ./secrets/passwords.nix;
+	hostname = import ./hostname.nix;
 in
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+      ( ./. + "/${hostname}/hardware-configuration.nix" )
     ];
 
   nixpkgs.config.allowUnfree = true;
@@ -32,7 +33,7 @@ in
   Enable=Source,Sink,Media,Socket
 ";
 
-  networking.hostName = "pokey-monkey"; # Define your hostname.
+  networking.hostName = hostname; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
 
@@ -79,7 +80,7 @@ in
 	vim 
 	emacs
 	neovim
-	(python3.withPackages(ps: with ps; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy flake8 yapf pyqt5 pyqtgraph rope pyside2 ]))
+	(python3.withPackages(ps: with ps; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy flake8 yapf pyqt5 pyqtgraph rope ]))
 	binutils
 	gcc
 	gnumake
@@ -159,10 +160,13 @@ in
  #     '';
  #   };
  # };
- services.udev.extraRules = ''
+ services.udev.extraRules = if hostname == "pokey-monkey" then
+ ''
        ATTR{idVendor}=="0e0d", ATTR{idProduct}=="0004", MODE="0666"
        ATTR{idVendor}=="0e0d", ATTR{idProduct}=="0009", MODE="0666"
- '';
+ ''
+ else
+ 	"";
 
 
   # Open ports in the firewall.
