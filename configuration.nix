@@ -7,15 +7,30 @@
 let 
 	passwords = import ./secrets/passwords.nix;
 	hostname = import ./hostname.nix;
+	home-manager = fetchGit {
+		url = git://github.com/rycee/home-manager;
+		ref = "release-19.03";
+		rev = "4f13f06b016d59420cafe34915abdd6b795d3416";
+	};
 in
 {
   imports =
     [ # Include the results of the hardware scan.
       ( ./. + "/${hostname}/hardware-configuration.nix" )
       ./packages.nix
+      "${home-manager}/nixos"
     ];
 
   nixpkgs.config.allowUnfree = true;
+
+  # home manager settings
+  home-manager.users.max = {
+	programs.git = {
+		enable = true;
+		userName = "Max Tyler";
+		userEmail = "maxastyler@gmail.com";
+	};
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
