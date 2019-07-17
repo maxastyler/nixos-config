@@ -28,6 +28,7 @@ in {
 		pavucontrol 
 		light # controls the backlight
 		ripgrep 
+		pdfgrep # search through pdf documents
 		fd
 		zip
 		unzip
@@ -43,7 +44,6 @@ in {
 		gnupg
 		#-- programming --#
 		vim 
-		emacs
 		neovim
 		(python3.withPackages(ps: with ps; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy flake8 yapf pyqt5 pyqtgraph rope ]))
 		binutils

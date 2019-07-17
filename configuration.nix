@@ -170,6 +170,7 @@ in
 
   # Enable the emacs daemon
   services.emacs.enable = true;
+  services.emacs.package = import ./emacs.nix { pkgs = pkgs; };
   
   # Make users immutable
   users.mutableUsers = false;
