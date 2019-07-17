@@ -54,6 +54,9 @@ in {
 		qt5.full
 		#-- desktop --#
 		sway 
+		mako # notifications for wayland
+		grim # take screenshots in wayland
+		slurp # select a region in wayland
 		firefox 
 		google-chrome
 		gimp 
