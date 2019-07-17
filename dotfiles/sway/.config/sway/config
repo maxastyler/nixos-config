@@ -17,8 +17,8 @@ set $right l
 set $term alacritty
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
-# set $menu dmenu_path | dmenu | xargs swaymsg exec
-set $menu rofi -show run
+set $menu dmenu_path | dmenu | xargs swaymsg exec
+# set $menu rofi -show run
 
 # start the notification manager
 exec mako
@@ -39,7 +39,7 @@ gaps inner $default_inner_gaps
 # Wallpaper
 #
 # output * bg /home/max/Dropbox/Camera\ Uploads/2018-12-20\ 14.36.09.jpg fill
-output * bg /home/max/Dropbox/pictures/wallpapers/spirited_away_lake.jpg fill
+# output * bg /home/max/Dropbox/pictures/wallpapers/spirited_away_lake.jpg fill
 #
 # Example configuration:
 #
@@ -125,7 +125,7 @@ input "1241:41165:USB_Keyboard_System_Control" {
     # start chrome
     # bindsym $mod+F2 exec google-chrome-stable
     # start qutebrowser
-    bindsym $mod+F2 exec qutebrowser
+    bindsym $mod+F2 exec firefox
 
     # launch emacsclient
     bindsym $mod+F3 exec emacsclient -c
@@ -298,7 +298,7 @@ bar {
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
     # status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
-    status_command while ~/.local/bin/status_command; do sleep 1; done
+    status_command while ~/.config/sway/status.sh; do sleep 1; done
 
     colors {
         statusline #ffffff

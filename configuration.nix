@@ -30,6 +30,9 @@ in
 		userName = "Max Tyler";
 		userEmail = "maxastyler@gmail.com";
 	};
+
+	xdg.configFile."sway/config".source = ./dotfiles/sway/.config/sway/config;
+	xdg.configFile."sway/status.sh".source = ./dotfiles/sway/.config/sway/status.sh;
   };
 
   # Use the systemd-boot EFI boot loader.
