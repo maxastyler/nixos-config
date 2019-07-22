@@ -1,0 +1,558 @@
+#+OPTIONS: toc:nil
+* Things to do
+** DONE Linting
+*** Add flycheck to emacs
+** DONE Set up pdf-tools to open pdf files instead of doc-view
+** TODO Fix keymappings
+*** DONE Look at evil-leader to see if this is still useful
+It's quite an old extension, so there might be something better now
+- No, it's not going to be useful
+*** DONE Look at hydra
+Don't know if this is useful with evil?
+No, don't use hydra
+*** TODO Use general for keymappings
+    Have a look at these dotfiles for an example https://github.com/kaushalmodi/.emacs.d/blob/master/setup-files/setup-pdf.el
+*** TODO Fix helm keybindings
+Use C-{h,j,k,l} rather than M-{...} for moving between things in a helm buffer
+** DONE Completion
+   Add in some completion package
+   Maybe [[http://company-mode.github.io/]]
+*** TODO Look for a good completion package
+** TODO EMMS
+Media player in emacs - works with mpv as a backend
+** DONE Set up commands to jump to wanted files
+   For example, jump to emacs config directly
+** TODO Add in org-ref for referencing stuff (instead of zotero, etc)
+** TODO Look at minted for viewing latex fragments
+https://github.com/gpoore/minted
+** TODO Look at persp mode for workspaces, etc.
+https://github.com/Bad-ptr/persp-mode.el
+** DONE Make helm always open in buffer below the windows 
+rather than in the last buffer
+** TODO Make racer jump to definition work correctly with evil mode jump
+When using racer jump to definition, evil mode doesn't record the jumps correctly
+** TODO Make emacs work well under nix
+* Useful things
+** Emacs keymap guide
+[[https://www.masteringemacs.org/article/mastering-key-bindings-emacs]] is a guide for emacs keymaps.
+** EVIL mode guide
+[[https://github.com/noctuid/evil-guide]] is a guide for EVIL mode
+* basic Setup
+** Set Some Default Variables
+#+BEGIN_SRC emacs-lisp :results silent
+(setq-default
+ confirm-kill-emacs 'yes-or-no-p 	; confirmation when killing emacs
+ indent-tabs-mode nil 			; don't use tabs to indent
+ select-enable-clipboard t 		; use the system clipboard
+ inhibit-startup-screen t
+ initial-scratch-message nil
+ initial-major-mode 'org-mode
+ doc-view-continuous t        ; in doc mode, scroll over pages
+ backup-directory-alist `(("." . "~/.emacs.d/backups")) ; which directory to put backups file
+ auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)) ;transform backups file name
+ winner-mode 1 ;; winner mode lets you undo window config mistakes
+ tab-width 4) 				; tab width to 4
+#+END_SRC
+** yes-or-no to y-or-n
+Stop asking for me to type in the full "yes" or "no"
+when a "y" or "n" would do...
+#+BEGIN_SRC emacs-lisp :results silent
+(fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+** Turn off cursor blinking
+#+BEGIN_SRC emacs-lisp :results silent
+(blink-cursor-mode 0)
+#+END_SRC
+** Set a Backup Directory
+Use this directory instead of pumping out backup files into the wild
+#+BEGIN_SRC emacs-lisp :results silent
+(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
+      backup-by-copying t
+      version-control t
+      delete-old-versions t
+      kept-new-versions 20
+      kept-old-versions 5)
+#+END_SRC
+** Add cargo bin to exec path
+#+BEGIN_SRC emacs-lisp :results silent
+(add-to-list 'exec-path "~/.cargo/bin")
+#+END_SRC
+* Other Packages
+** zenburn theme
+   Install the zenburn theme
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package zenburn-theme
+:ensure t ;; install the package if it's not installed already
+:config
+(load-theme 'zenburn t)
+)
+#+END_SRC
+** Undo tree
+This package turns the undo tangle emacs usually has into an undo tree
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package undo-tree
+:ensure t ;; install the package if it's not installed already
+:config
+(global-undo-tree-mode) ;; start undo-tree
+(setq undo-tree-visualizer-diff t) ;; add in a diff visualiser
+)
+#+END_SRC
+** EVIL
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package evil
+:ensure t ;; install the package if it's not installed already
+:init 
+(setq evil-search-module 'evil-search)
+(setq evil-want-integration t)
+(setq evil-want-keybinding nil)
+(setq evil-vsplit-window-right t) ; split to right
+(setq evil-split-window-below t) ; split below
+(setq evil-want-C-u-scroll t) ; scroll with ctrl-u
+:config
+(evil-mode 1)
+)
+#+END_SRC
+** EVIL-magit
+Make evil work with magit
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package evil-magit
+:after evil
+:ensure t ;; install the package if it's not installed already
+)
+#+END_SRC
+** EVIL collection
+A collection of keybindings which cover the rest of the stuff evil doesn't
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package evil-collection
+:after evil ;; make sure it's started after evil
+:ensure t ;; install the package if it's not installed already
+:custom
+(evil-collection-setup-minibuffer t)
+:config
+(evil-collection-init)
+)
+#+END_SRC
+** EVIL-snipe
+   Motions to jump to a point in the buffer
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package evil-snipe
+:after evil ;; make sure it's started after evil
+:ensure t ;; install the package if it's not installed already
+:config
+(evil-snipe-mode +1)
+(evil-snipe-override-mode +1)
+(add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode) ;; fix conflict with magit
+(setq evil-snipe-scope 'visible)
+)
+#+END_SRC
+** Which-key 
+Which-key is located [[https://github.com/justbur/emacs-which-key][here]], and allows the user to see mapped keys
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package which-key
+:ensure t ;; install the package if it's not installed already
+:config
+(which-key-mode 1)
+)
+#+END_SRC
+
+** General
+General lets users define keymaps. Works nicely with evil mode
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package general
+:ensure t ;; install the package if it's not installed already
+:after which-key
+:config
+(general-override-mode 1)
+
+  (defun find-user-init-file ()
+    "Edit the `user-init-file', in same window."
+    (interactive)
+    (find-file user-init-file))
+  (defun find-user-init-org-file ()
+    "Edit the `user-init-file', in same window."
+    (interactive)
+    (find-file "~/.emacs.d/config.org"))
+  (defun load-user-init-file ()
+    "Load the `user-init-file', in same window."
+    (interactive)
+    (load-file user-init-file))
+
+
+(general-create-definer tyrant-def ;; make a new general definer, tyrant def
+:states '(normal visual insert motion emacs)
+:prefix "SPC"
+:non-normal-prefix "C-SPC")
+
+(tyrant-def  ;; set the keys in the tyrant def
+    ""     nil
+    "c"   (general-simulate-key "C-c")
+    "h"   (general-simulate-key "C-h")
+    "u"   (general-simulate-key "C-u")
+    "x"   (general-simulate-key "C-x")
+    
+    "SPC" 'helm-M-x
+
+    ;; Package manager
+    "lp"  'list-packages
+
+    ;; Theme operations
+    "t"   '(:ignore t :which-key "themes")
+    "tn"  'my/cycle-theme
+    "tt"  'load-theme
+    "tl"  'load-leuven-theme
+    "td"  'load-dichromacy-theme
+    
+    ;; Finding things operations
+    "f"   '(:ignore t :which-key "find")
+    "fc"  '(:ignore t :which-key "init file")
+    "fci" 'find-user-init-file
+    "fcr" 'load-user-init-file
+    "fco" 'find-user-init-org-file
+    
+    ;; Project operations
+    "p"   '(:ignore t :which-key "project")
+    
+    ;; Buffer operations
+    "b"   '(:ignore t :which-key "buffer")
+    "bn"  'evil-next-buffer
+    "bp"  'evil-prev-buffer
+    "bd"  'kill-this-buffer
+    
+    ;; Window operations
+    "w"   '(:ignore t :which-key "window")
+    "wm"  'maximize-window
+    "wv"  'split-window-horizontally
+    "ws"  'split-window-vertically
+    "wm"  'maximize-window
+    "wu"  'winner-undo
+    "ww"  'other-window
+    "wd"  'delete-window
+    "wD"  'delete-other-windows
+    
+    ;; Quitting
+    "q"   '(:ignore t :which-key "quit")
+    "qq"  'kill-emacs
+
+)
+)
+#+END_SRC
+
+** Magit
+A git porcelain for emacs
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package magit
+:ensure t ;; install the package if it's not installed already
+:config
+(tyrant-def
+    "g" '(:ignore t :which-key "git")
+    "gs" 'magit-status
+)
+)
+#+END_SRC
+** Emacs-async
+To allow for asynchronous stuff
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package async
+:ensure t ;; install the package if it's not installed already
+)
+#+END_SRC
+** popup-el
+A popup interface for emacs
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package popup
+:ensure t ;; install the package if it's not installed already
+)
+#+END_SRC
+** Helm
+A popup finder
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package helm
+:ensure t ;; install the package if it's not installed already
+:config 
+(helm-mode 1)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(setq helm-always-two-windows nil)
+(setq helm-display-buffer-default-height 23)
+(setq helm-default-display-buffer-functions '(display-buffer-in-side-window))
+;;(setq helm-display-function 'helm-display-buffer-in-own-frame)
+(tyrant-def
+    "ff"  'helm-find-files
+    "pf"  'helm-projectile
+    "fr" 'helm-recentf
+    "pp" 'helm-projectile-switch-project
+    "pr" 'helm-projectile-rg
+    "bb"  'helm-buffers-list
+    )
+)
+#+END_SRC
+
+** Projectile
+For managing projects in emacs
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package projectile
+:ensure t ;; install the package if it's not installed already
+:config 
+(projectile-mode)
+)
+#+END_SRC
+
+** Helm-projectile
+For integration of helm and projectile
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package helm-projectile
+:ensure t ;; install the package if it's not installed already
+:after (projectile helm)
+:config 
+(helm-projectile-on)
+(setq projectile-completion-system 'helm)
+)
+#+END_SRC
+
+** Helm-rg
+For use of ripgrep with helm
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package helm-rg
+:ensure t ;; install the package if it's not installed already
+:after (projectile helm)
+)
+#+END_SRC
+** htmlize
+This is used to convert a buffer into html, to look all nice.
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package htmlize
+:ensure t ;; install the package if it's not installed already
+)
+#+END_SRC
+
+** flycheck
+Used for code linting
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package flycheck
+:ensure t ;; install the package if it's not installed already
+:config
+(global-flycheck-mode)
+)
+(use-package flycheck-rust
+:ensure t ;; install the package if it's not installed already
+:after flycheck
+:config
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+)
+#+END_SRC
+** pdf-tools
+A better pdf viewer than doc-view
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package pdf-tools
+:ensure t ;; install the package if it's not installed already
+:config
+(pdf-tools-install)
+)
+#+END_SRC
+** tex
+A package for dealing with latex in emacs. Add a buffer local hook to compile after saving.
+
+
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package tex
+:ensure auctex ;; install the package if it's not installed already
+:mode ("\\.tex\\'" . TeX-latex-mode)
+:config
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq TeX-PDF-mode t)
+(setq-default TeX-master nil)
+(setq TeX-source-correlate-start-server 'synctex)
+(setq TeX-view-program-selection '(((output-dvi has-no-display-manager)
+  "dvi2tty")
+ ((output-dvi style-pstricks)
+  "dvips and gv")
+ (output-dvi "xdvi")
+ (output-pdf "PDF Tools")
+ (output-html "xdg-open")))
+:init
+(add-hook 'LaTeX-mode-hook #'my-LaTeX-mode-hooks)
+(add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
+(defun my-LaTeX-mode-hooks ()
+  (TeX-source-correlate-mode t)
+  (LaTeX-math-mode t)
+  (add-hook 'after-save-hook (lambda () (TeX-command-run-all nil)) nil t) ;; save after compilation
+)
+)
+#+END_SRC
+** reftex
+A package for dealing with latex in emacs
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package reftex
+:hook (LaTeX-mode . turn-on-reftex)
+:ensure t ;; install the package if it's not installed already
+:config
+(setq reftex-plug-into-AUCTeX t)
+)
+#+END_SRC
+
+** org
+Organisation package
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package org
+  :ensure t ;; install the package if it's not installed already
+  :config
+  (setq org-return-follows-link t)
+  (org-babel-do-load-languages ;; load the languages for org-babel
+   'org-babel-load-languages
+   '((python . t)
+   (emacs-lisp . t)
+   (C .t)
+))
+  )
+#+END_SRC
+** org-bullets
+Get nice bullet points in org
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package org-bullets
+  :ensure t
+  :hook (org-mode . org-bullets-mode))
+#+END_SRC
+** elpy
+Good python mode. 
+Remove the highlighting mode from the default modes - it's annoying.
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package elpy
+:ensure t
+:config
+(elpy-enable)
+(setq elpy-modules (remove 'elpy-module-highlight-indentation elpy-modules))
+)
+#+END_SRC
+** company
+Organisation package
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package company
+:ensure t ;; install the package if it's not installed already
+:init
+(add-hook 'after-init-hook 'global-company-mode)
+:config
+(setq company-minimum-prefix-length 2) ;; start completing after 2 characters
+(setq company-idle-delay 0.2) ;; start completing after 2 characters
+(define-key company-active-map (kbd "C-w") nil) ;; make ctrl-W still kill back a word when completing
+)
+#+END_SRC
+
+** company-reftex
+   Add reftex completions to company
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package company-reftex
+  :after company
+  :ensure t
+  :hook (reftex-mode . load-company-reftex)
+  :config
+  (defun load-company-reftex ()
+    (add-to-list 'company-backends
+                 '(company-reftex-citations
+                   company-reftex-labels))))
+#+END_SRC
+** lsp
+A language server protocol plugin
+# #+BEGIN_SRC emacs-lisp :results silent
+# (use-package lsp-mode
+# :ensure t
+# :hook  ((rust-mode . lsp)
+# ;        (python-mode . lsp) ;; don't use for python mode at the moment
+# )
+# )
+# (use-package lsp-ui 
+# :ensure t
+# )
+# (use-package company-lsp 
+# :ensure t
+# :config
+# (setq company-lsp-async t)
+# (push 'company-lsp company-backends)
+# )
+# #+END_SRC
+** rust-mode
+   Mode for rust files
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package rust-mode
+:ensure t ;; install the package if it's not installed already
+)
+#+END_SRC
+** racer
+Racer completions for rust mode
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package racer
+:ensure t 
+:config 
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(setq company-tooltip-align-annotations t)
+(setq racer-rust-src-path "/nix/store/0lm55sfsm6zasl1lfjnjv0c944sjy84h-rust-src/")
+)
+#+END_SRC
+** cargo
+   Interaction with cargo
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package cargo
+:ensure t ;; install the package if it's not installed already
+:config
+(add-hook 'rust-mode-hook 'cargo-minor-mode)
+)
+#+END_SRC
+** company-auctex
+Use company with auctex
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package company-auctex
+:ensure t ;; install the package if it's not installed already
+:config
+(company-auctex-init)
+)
+#+END_SRC
+** telephone-line
+New powerline for emacs
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package telephone-line
+:ensure t ;; install the package if it's not installed already
+:config
+(telephone-line-mode 1)
+)
+#+END_SRC
+** emacs-ipython-notebook
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package ein
+:ensure t
+)
+#+END_SRC
+** rainbow delimiters
+Colour brackets based on their position
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package rainbow-delimiters
+:ensure t
+:config
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+)
+#+END_SRC
+** Neotree
+   Add in a nice NERDtree like tree 
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package neotree
+:ensure t
+:config
+(global-set-key [f8] 'neotree-toggle)
+)
+#+END_SRC
+** haskell mode 
+   Haskell package to allow interaction with cabal, etc.
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package haskell-mode
+:ensure t
+)
+#+END_SRC
+** Nix mode
+Add a mode for nix stuff
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package nix-mode
+:ensure t
+)
+#+END_SRC
