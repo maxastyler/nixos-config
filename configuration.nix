@@ -20,6 +20,7 @@ in
       ./packages.nix
       "${home-manager}/nixos"
     ];
+  
 
   nixpkgs.config.allowUnfree = true;
 
@@ -43,9 +44,6 @@ in
 
   # Update Intel microcode on boot
   hardware.cpu.intel.updateMicrocode = true;
-
-  # to run steam stuff
-  hardware.opengl.driSupport32Bit = true;
 
   # enable bluetooth
   hardware.bluetooth.enable = true;

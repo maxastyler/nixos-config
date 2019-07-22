@@ -26,8 +26,9 @@ in
     evil-snipe
     which-key
     async
+    ivy
+    counsel
     popup
-    pdf-tools
     flycheck
     org-bullets
     company

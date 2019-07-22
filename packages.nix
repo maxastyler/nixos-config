@@ -1,6 +1,6 @@
 # packages to be installed
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let 
 	# stable channel fetched 2019/07/16
@@ -42,6 +42,8 @@ in {
 		usbutils
 		git-crypt
 		gnupg
+    poppler
+    libpng
 		#-- programming --#
 		vim 
 		neovim
@@ -72,8 +74,6 @@ in {
 		playerctl # to see what music is playing
 		google-play-music-desktop-player
 		rclone-browser # qt front-end for rclone
-		steam
-		steam-run-native
 		gzdoom # doom port
 		qtcreator
 	];
