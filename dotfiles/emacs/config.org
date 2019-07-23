@@ -143,6 +143,14 @@ Which-key is located [[https://github.com/justbur/emacs-which-key][here]], and a
 )
 #+END_SRC
 
+** Anaconda
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package anaconda-mode
+:config
+(add-hook 'python-mode-hook 'anaconda-mode)
+(add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+)
+#+END_SRC
 ** Magit
 A git porcelain for emacs
 #+BEGIN_SRC emacs-lisp :results silent
@@ -167,6 +175,30 @@ For managing projects in emacs
 (use-package projectile
 :config 
 (projectile-mode)
+)
+#+END_SRC
+
+** Ivy
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package ivy
+:config 
+(ivy-mode 1)
+)
+#+END_SRC
+
+** Swiper
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package swiper
+:config 
+(global-set-key (kbd "C-s") 'swiper)
+)
+#+END_SRC
+
+** Counsel
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package counsel
+:config 
+(counsel-mode 1)
 )
 #+END_SRC
 
@@ -265,7 +297,6 @@ Organisation package
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package company-reftex
   :after company
-  :ensure t
   :hook (reftex-mode . load-company-reftex)
   :config
   (defun load-company-reftex ()
@@ -277,14 +308,24 @@ Organisation package
    Mode for rust files
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package rust-mode
-:ensure t ;; install the package if it's not installed already
+)
+#+END_SRC
+** company-anaconda
+Use company with anaconda
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package company-anaconda
+:after company
+:hook (python-mode . load-company-anaconda)
+:config
+(defun load-company-anaconda () 
+	(add-to-list 'company-backends 'company-anaconda))
 )
 #+END_SRC
 ** company-auctex
 Use company with auctex
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package company-auctex
-:ensure t ;; install the package if it's not installed already
+:after company
 :config
 (company-auctex-init)
 )

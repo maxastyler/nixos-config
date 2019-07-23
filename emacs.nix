@@ -27,6 +27,7 @@ in
     which-key
     async
     ivy
+    swiper
     counsel
     popup
     flycheck
