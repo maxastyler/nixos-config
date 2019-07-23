@@ -42,8 +42,8 @@ in {
 		usbutils
 		git-crypt
 		gnupg
-    poppler
-    libpng
+    		poppler
+    		libpng
 		#-- programming --#
 		vim 
 		neovim
@@ -55,6 +55,7 @@ in {
 		texlive.combined.scheme-full
 		qt5.full
 		#-- desktop --#
+		alacritty
 		sway 
 		mako # notifications for wayland
 		grim # take screenshots in wayland
