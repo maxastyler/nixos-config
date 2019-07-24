@@ -23,7 +23,14 @@ in {
     overlays = [ moz_overlay ];
 	};
 
-	environment.systemPackages = with pkgs; [
+	environment.systemPackages = let
+                             myRust = ((pkgs.rustChannelOf { date = "2019-07-24"; channel = "nightly"; }).rust.override {
+    extensions = [
+               "rust-src"
+               "rustfmt-preview"
+];
+}); in
+  with pkgs; [
 		#-- system stuff --#
 		wget 
 		rclone # working with cloud storage
@@ -60,12 +67,7 @@ in {
 		texlive.combined.scheme-full
 		qt5.full
 		#-- desktop --#
-		((rustChannelOf { date = "2019-07-24"; channel = "nightly"; }).rust.override {
-    extensions = [
-               "rust-src"
-               "rustfmt-preview"
-];
-})
+    myRust
 		alacritty
 		sway 
 		mako # notifications for wayland
