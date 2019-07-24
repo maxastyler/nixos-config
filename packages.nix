@@ -10,12 +10,17 @@ let
 		ref = "nixos-19.03";
 		rev = "58b68770692018bbf2bf64ffa10e11610bb749d0";
 	};
+  # overlay fetched 2019/07/24
+  moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/200cf0640fd8fdff0e1a342db98c9e31e6f13cd7.tar.gz);
 in {
 	nixpkgs = {
 		config.allowUnfree = true;
 
 		# override the original package set with the stable set
 		config.packageOverrides = oldPkgs: stable;
+
+    # add in overlays
+    overlays = [ moz_overlay ];
 	};
 
 	environment.systemPackages = with pkgs; [
@@ -55,10 +60,16 @@ in {
 		texlive.combined.scheme-full
 		qt5.full
 		#-- desktop --#
+		((rustChannelOf { date = "2019-07-24"; channel = "nightly"; }).rust.override {
+    extensions = [
+               "rust-src"
+               "rustfmt-preview"
+];
+})
 		alacritty
 		sway 
 		mako # notifications for wayland
-		grim # take screenshots in wayland
+		grim # taka screenshots in wayland
 		slurp # select a region in wayland
 		firefox 
 		google-chrome

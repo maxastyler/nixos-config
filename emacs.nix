@@ -28,6 +28,7 @@ in
     async
     ivy
     swiper
+    eyebrowse
     counsel
     popup
     flycheck

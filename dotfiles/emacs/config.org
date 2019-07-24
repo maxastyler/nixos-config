@@ -218,6 +218,14 @@ A better pdf viewer than doc-view
 (pdf-tools-install)
 )
 #+END_SRC
+** eyebrowse
+   For managing multiple windows
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package eyebrowse
+:config
+(eyebrowse-mode 1)
+)
+#+END_SRC
 ** tex
 A package for dealing with latex in emacs. Add a buffer local hook to compile after saving.
 
@@ -289,6 +297,7 @@ Organisation package
 (setq company-minimum-prefix-length 2) ;; start completing after 2 characters
 (setq company-idle-delay 0.2) ;; start completing after 2 characters
 (define-key company-active-map (kbd "C-w") nil) ;; make ctrl-W still kill back a word when completing
+(add-hook 'racer-mode-hook #'company-mode)
 )
 #+END_SRC
 
@@ -308,6 +317,15 @@ Organisation package
    Mode for rust files
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package rust-mode
+)
+#+END_SRC
+** racer
+   Completion for rust
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package racer
+:config
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
 )
 #+END_SRC
 ** company-anaconda
