@@ -89,6 +89,7 @@ in {
 		google-play-music-desktop-player
 		rclone-browser # qt front-end for rclone
 		gzdoom # doom port
+		sxiv # image viewer
 		qtcreator
 	];
 }

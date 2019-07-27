@@ -150,6 +150,13 @@ Which-key is located [[https://github.com/justbur/emacs-which-key][here]], and a
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
 )
+
+#+END_SRC
+** Yapf
+   A python code formatter
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package py-yapf
+)
 #+END_SRC
 ** Magit
 A git porcelain for emacs

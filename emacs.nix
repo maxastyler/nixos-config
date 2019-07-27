@@ -42,4 +42,5 @@ in
     cargo
     anaconda-mode
     nix-mode
+    py-yapf
   ]))
