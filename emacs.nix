@@ -30,6 +30,7 @@ in
     swiper
     eyebrowse
     counsel
+    counsel-projectile
     popup
     flycheck
     org-bullets

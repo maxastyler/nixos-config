@@ -208,6 +208,13 @@ For managing projects in emacs
 (counsel-mode 1)
 )
 #+END_SRC
+** Counsel projectile
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package counsel-projectile
+:config 
+(counsel-projectile-mode 1)
+)
+#+END_SRC
 
 ** flycheck
 Used for code linting

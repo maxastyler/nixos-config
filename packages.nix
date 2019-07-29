@@ -54,8 +54,9 @@ in {
 		usbutils
 		git-crypt
 		gnupg
-    		poppler
-    		libpng
+    poppler
+    libpng
+    fzf
 		#-- programming --#
 		vim 
 		neovim
