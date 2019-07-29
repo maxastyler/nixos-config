@@ -32,6 +32,13 @@ rather than in the last buffer
 ** TODO Make racer jump to definition work correctly with evil mode jump
 When using racer jump to definition, evil mode doesn't record the jumps correctly
 ** TODO Make emacs work well under nix
+** TODO check if spaceline is working
+   - use with eyebrowse/persp-mode
+** TODO See if persp-mode is worth it over (with?) eyebrowse
+** TODO Get the package that lets you use multiple terms
+** TODO set up ivy/projectile keybindings
+   - Maybe use C-z C-? for the different keys? That's free
+** TODO Add magit to keymaps - C-z C-g?
 * Useful things
 ** Emacs keymap guide
 [[https://www.masteringemacs.org/article/mastering-key-bindings-emacs]] is a guide for emacs keymaps.
@@ -360,6 +367,12 @@ Use company with auctex
 :after company
 :config
 (company-auctex-init)
+)
+#+END_SRC
+** spaceline
+A nice status bar
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package spaceline
 )
 #+END_SRC
 ** Nix mode

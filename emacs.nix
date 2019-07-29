@@ -44,4 +44,5 @@ in
     anaconda-mode
     nix-mode
     py-yapf
+    spaceline
   ]))
