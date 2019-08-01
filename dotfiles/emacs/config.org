@@ -39,6 +39,9 @@ When using racer jump to definition, evil mode doesn't record the jumps correctl
 ** TODO set up ivy/projectile keybindings
    - Maybe use C-z C-? for the different keys? That's free
 ** TODO Add magit to keymaps - C-z C-g?
+** TODO Check out aweshell - and eshell extension (not in melpa?)
+** TODO Set up up spaceline with winum/eyebrowse
+** TODO Set up multi-term
 * Useful things
 ** Emacs keymap guide
 [[https://www.masteringemacs.org/article/mastering-key-bindings-emacs]] is a guide for emacs keymaps.
@@ -245,6 +248,14 @@ A better pdf viewer than doc-view
 (use-package eyebrowse
 :config
 (eyebrowse-mode 1)
+)
+#+END_SRC
+** winum
+   Tool to allow swapping between windows with numbers
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package winum
+:config
+(winum-mode 1)
 )
 #+END_SRC
 ** tex
