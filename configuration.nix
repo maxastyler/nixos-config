@@ -186,13 +186,6 @@ in
 
   users.users.root.hashedPassword = passwords.root;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  #users.users.suraj = 
-  #  home = "/home/suraj"
-  #  isNormalUser = true;
-  #  extraGroups = [ ]; # Enable ‘sudo’ for the user.
-  #};
-
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you

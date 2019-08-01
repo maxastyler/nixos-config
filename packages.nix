@@ -54,13 +54,14 @@ in {
 		usbutils
 		git-crypt
 		gnupg
-    poppler
-    libpng
-    fzf
+	 	poppler
+		libpng
+		fzf
 		#-- programming --#
 		vim 
 		neovim
 		(python3.withPackages(ps: with ps; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy jedi flake8 yapf pyqt5 pyqtgraph rope ]))
+		pydb # python debugger
 		binutils
 		gcc
 		gnumake
@@ -68,7 +69,7 @@ in {
 		texlive.combined.scheme-full
 		qt5.full
 		#-- desktop --#
-    myRust
+    		myRust
 		alacritty
 		sway 
 		mako # notifications for wayland

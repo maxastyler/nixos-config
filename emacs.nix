@@ -45,4 +45,5 @@ in
     nix-mode
     py-yapf
     spaceline
+    winum
   ]))
