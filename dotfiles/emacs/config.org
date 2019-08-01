@@ -255,7 +255,7 @@ A better pdf viewer than doc-view
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package winum
 :config
-(winum-mode 1)
+(winum-mode)
 )
 #+END_SRC
 ** tex
