@@ -46,4 +46,5 @@ in
     py-yapf
     spaceline
     winum
+    rainbow-delimiters
   ]))
