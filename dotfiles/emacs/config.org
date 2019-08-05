@@ -414,6 +414,10 @@ Use company with auctex
 A nice status bar
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package spaceline
+:config
+(require 'spaceline-config)
+(setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+(spaceline-spacemacs-theme)
 )
 #+END_SRC
 ** Nix mode
