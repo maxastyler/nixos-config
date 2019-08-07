@@ -60,7 +60,7 @@ in {
 		#-- programming --#
 		vim 
 		neovim
-		(python3.withPackages(ps: with ps; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy jedi flake8 yapf pyqt5 pyqtgraph rope ]))
+		(python3.withPackages(ps: with ps; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy jedi flake8 yapf pyqt5 pyqtgraph rope numba ]))
 		pydb # python debugger
 		binutils
 		gcc

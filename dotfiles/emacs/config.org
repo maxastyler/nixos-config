@@ -435,3 +435,12 @@ Colour matching parens
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 )
 #+END_SRC
+** Multi Term
+Allow multiple terminals
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package multi-term
+:config
+(setq multi-term-program "/run/current-system/sw/bin/bash")
+(global-set-key (kbd "C-c t t") 'multi-term)
+)
+#+END_SRC
