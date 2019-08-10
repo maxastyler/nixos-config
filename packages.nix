@@ -3,15 +3,15 @@
 { config, pkgs, lib, ... }:
 
 let 
-	# stable channel fetched 2019/07/16
+	# stable channel fetched 2019/08/10
 	stable = fetchGit {
-		name = "nixos-stable-19.03-2019-07-16";
+		name = "nixos-stable-19.03-2019-08-10";
 		url = git://github.com/NixOS/nixpkgs-channels;
 		ref = "nixos-19.03";
-		rev = "58b68770692018bbf2bf64ffa10e11610bb749d0";
+    rev = "56d94c8c69f8cac518027d191e2f8de678b56088";
 	};
-  # overlay fetched 2019/07/24
-  moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/200cf0640fd8fdff0e1a342db98c9e31e6f13cd7.tar.gz);
+  # overlay fetched 2019/08/10
+  moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/ac8e9d7bbda8fb5e45cae20c5b7e44c52da3ac0c.tar.gz);
 in {
 	nixpkgs = {
 		config.allowUnfree = true;
@@ -24,7 +24,7 @@ in {
 	};
 
 	environment.systemPackages = let
-                             myRust = ((pkgs.rustChannelOf { date = "2019-07-24"; channel = "nightly"; }).rust.override {
+                             myRust = ((pkgs.rustChannelOf { date = "2019-08-10"; channel = "nightly"; }).rust.override {
     extensions = [
                "rust-src"
                "rustfmt-preview"
