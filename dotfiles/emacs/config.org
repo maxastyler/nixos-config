@@ -441,6 +441,9 @@ Allow multiple terminals
 (use-package multi-term
 :config
 (setq multi-term-program "/run/current-system/sw/bin/bash")
-(global-set-key (kbd "C-c t t") 'multi-term)
+(global-set-key (kbd "C-c t t") 'multi-term-dedicated-toggle)
+(global-set-key (kbd "C-c t n") 'multi-term)
+(global-set-key (kbd "C-c t f") 'multi-term-next)
+(global-set-key (kbd "C-c t b") 'multi-term-prev)
 )
 #+END_SRC
