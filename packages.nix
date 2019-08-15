@@ -12,6 +12,20 @@ let
 	};
   # overlay fetched 2019/08/10
   moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/ac8e9d7bbda8fb5e45cae20c5b7e44c52da3ac0c.tar.gz);
+
+  qutip_overlay = self: super: {
+        python3 = super.python3.override {
+            packageOverrides = python-self: python-super: {
+            qutip = python-super.qutip.overrideAttrs (oldAttrs: {
+                version = "4.4.1";
+                src = super.fetchurl {
+                    url = "http://qutip.org/downloads/4.4.1/qutip-4.4.1.tar.gz";
+                    sha256 = "0224c4x4jzyr2jml66jshm30m1r36bnsf4z04a17wqb9gb3afn9x";
+                };
+            });
+            };
+        };
+    };
 in {
 	nixpkgs = {
 		config.allowUnfree = true;
@@ -20,7 +34,7 @@ in {
 		config.packageOverrides = oldPkgs: stable;
 
     # add in overlays
-    overlays = [ moz_overlay ];
+    overlays = [ moz_overlay qutip_overlay ];
 	};
 
 	environment.systemPackages = let
@@ -60,7 +74,7 @@ in {
 		#-- programming --#
 		vim 
 		neovim
-		(python3.withPackages(ps: with ps; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy jedi flake8 yapf pyqt5 pyqtgraph rope numba ]))
+		(python3.withPackages(ps: with ps; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy jedi flake8 yapf pyqt5 pyqtgraph rope numba jupyter ]))
 		pydb # python debugger
 		binutils
 		gcc
