@@ -22,6 +22,9 @@ let
                     url = "http://qutip.org/downloads/4.4.1/qutip-4.4.1.tar.gz";
                     sha256 = "0224c4x4jzyr2jml66jshm30m1r36bnsf4z04a17wqb9gb3afn9x";
                 };
+                patchPhase = ''
+                export HOME=$NIX_BUILD_TOP
+                '';
             });
             };
         };
@@ -74,7 +77,7 @@ in {
 		#-- programming --#
 		vim 
 		neovim
-		(python3.withPackages(ps: with ps; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy jedi flake8 yapf pyqt5 pyqtgraph rope numba jupyter ]))
+		(python3.withPackages(ps: with ps; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy jedi flake8 yapf pyqt5 pyqtgraph rope numba qutip jupyter ]))
 		pydb # python debugger
 		binutils
 		gcc
