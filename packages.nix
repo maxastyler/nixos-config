@@ -10,9 +10,18 @@ let
 		ref = "nixos-19.03";
     rev = "56d94c8c69f8cac518027d191e2f8de678b56088";
 	};
+  # use unstable for certain versions of packages
+	# unstable channel fetched 2019/08/10
+	unstable = fetchGit {
+		name = "nixos-unstable-2019-08-21";
+		url = git://github.com/NixOS/nixpkgs-channels;
+		ref = "nixos-unstable";
+    rev = "1412af4b2cfae71d447164097d960d426e9752c0";
+	};
   # overlay fetched 2019/08/10
   moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/ac8e9d7bbda8fb5e45cae20c5b7e44c52da3ac0c.tar.gz);
 
+  # create an overlay for the qutip python library, because nixpkgs doesn't have an updated version
   qutip_overlay = self: super: {
         python3 = super.python3.override {
             packageOverrides = python-self: python-super: {
@@ -33,8 +42,8 @@ in {
 	nixpkgs = {
 		config.allowUnfree = true;
 
-		# override the original package set with the stable set
-		config.packageOverrides = oldPkgs: stable;
+		# override the original package set with the unstable set
+		config.packageOverrides = oldPkgs: unstable;
 
     # add in overlays
     overlays = [ moz_overlay qutip_overlay ];
