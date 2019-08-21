@@ -3,15 +3,15 @@
 { config, pkgs, lib, ... }:
 
 let 
-	# stable channel fetched 2019/08/10
+	# stable channel fetched 2019/08/21
 	stable = fetchGit {
-		name = "nixos-stable-19.03-2019-08-10";
+		name = "nixos-stable-19.03-2019-08-21";
 		url = git://github.com/NixOS/nixpkgs-channels;
 		ref = "nixos-19.03";
-    rev = "56d94c8c69f8cac518027d191e2f8de678b56088";
+    rev = "94b577411550a31d15dccbc22801325ec5492985";
 	};
   # use unstable for certain versions of packages
-	# unstable channel fetched 2019/08/10
+	# unstable channel fetched 2019/08/21
 	unstable = fetchGit {
 		name = "nixos-unstable-2019-08-21";
 		url = git://github.com/NixOS/nixpkgs-channels;
@@ -38,15 +38,21 @@ let
             };
         };
     };
+
+  blender_overlay = self: super: {
+    blender = pkgs.callPackage ./blender/default.nix { };
+  };
+
 in {
 	nixpkgs = {
 		config.allowUnfree = true;
 
 		# override the original package set with the unstable set
-		config.packageOverrides = oldPkgs: unstable;
+		config.packageOverrides = oldPkgs: stable // {
+    };
 
     # add in overlays
-    overlays = [ moz_overlay qutip_overlay ];
+    overlays = [ moz_overlay qutip_overlay blender_overlay ];
 	};
 
 	environment.systemPackages = let
@@ -86,7 +92,7 @@ in {
 		#-- programming --#
 		vim 
 		neovim
-		(python3.withPackages(ps: with ps; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy jedi flake8 yapf pyqt5 pyqtgraph rope numba qutip jupyter ]))
+		(python3.withPackages(ps: with ps; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy jedi flake8 yapf rope pyqt5 numba jupyter ]))
 		pydb # python debugger
 		binutils
 		gcc
