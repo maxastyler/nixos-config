@@ -111,7 +111,7 @@ in {
 		google-chrome
 		gimp 
 		blender 
-		lxappearance-gtk3
+		lxappearance
 		adapta-gtk-theme
 		numix-icon-theme
 		godot
