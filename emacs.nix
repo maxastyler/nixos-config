@@ -34,6 +34,7 @@ in
     popup
     flycheck
     org-bullets
+    org-ref
     company
     company-anaconda
     company-reftex

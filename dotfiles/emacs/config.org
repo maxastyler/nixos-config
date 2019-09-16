@@ -325,6 +325,7 @@ A package for dealing with latex in emacs
 :hook (LaTeX-mode . turn-on-reftex)
 :config
 (setq reftex-plug-into-AUCTeX t)
+(setq reftex-default-bibliography '("~/git/notes/bibliography/references.bib"))
 )
 #+END_SRC
 
@@ -339,7 +340,7 @@ Organisation package
    '((python . t)
    (emacs-lisp . t)
    (C . t)
-))
+   ))
   )
 #+END_SRC
 ** org-bullets
@@ -347,6 +348,17 @@ Get nice bullet points in org
 #+BEGIN_SRC emacs-lisp :results silent
 (use-package org-bullets
   :hook (org-mode . org-bullets-mode))
+#+END_SRC
+** org-ref
+Org reference manager
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package org-ref
+:config
+;; see org-ref for use of these variables
+(setq org-ref-bibliography-notes "~/git/notes/bibliography/bib_notes.org"
+      org-ref-default-bibliography '("~/git/notes/bibliography/references.bib")
+      org-ref-pdf-directory "~/git/notes/bibliography/pdfs/")
+)
 #+END_SRC
 ** company
 Organisation package
