@@ -48,4 +48,5 @@ in
     spaceline
     winum
     rainbow-delimiters
+    ivy-bibtex
   ]))

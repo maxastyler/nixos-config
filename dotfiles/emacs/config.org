@@ -335,6 +335,19 @@ Organisation package
   (use-package org
   :config
   (setq org-return-follows-link t)
+  (setq org-directory "~/git/notes")
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
+  (setq org-agenda-files (list org-directory))
+  ;; set up my keymaps
+  (global-set-key (kbd "C-c l") 'org-store-link)
+  (global-set-key (kbd "C-c a") 'org-agenda)
+  (global-set-key (kbd "C-c c") 'org-capture)
+  ;; set up my capture templates
+  (setq org-capture-templates
+        '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
+           "* TODO %?\n  %i\n  %a")
+          ("j" "Journal" entry (file+datetree org-default-notes-file)
+           "* %?\nEntered on %U\n  %i\n  %a")))
   (org-babel-do-load-languages ;; load the languages for org-babel
    'org-babel-load-languages
    '((python . t)
@@ -358,6 +371,21 @@ Org reference manager
 (setq org-ref-bibliography-notes "~/git/notes/bibliography/bib_notes.org"
       org-ref-default-bibliography '("~/git/notes/bibliography/references.bib")
       org-ref-pdf-directory "~/git/notes/bibliography/pdfs/")
+)
+#+END_SRC
+** ivy-bibtex
+   Use ivy to search through bibtex
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package ivy-bibtex
+:after ivy
+:config
+(setq ivy-re-builders-alist
+      '((ivy-bibtex . ivy--regex-ignore-order)
+        (t . ivy--regex-plus)))
+(setq bibtex-completion-bibliography
+      '("~/git/notes/bibliography/references.bib"))
+(setq bibtex-completion-library-path '("~/git/notes/bibliography/pdfs/"))
+(setq bibtex-completion-notes-path "~/git/notes/bibliography/bib_notes.org")
 )
 #+END_SRC
 ** company
