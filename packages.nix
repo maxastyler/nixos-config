@@ -3,22 +3,22 @@
 { config, pkgs, lib, ... }:
 
 let 
-	# stable channel fetched 2019/10/07
+	# stable channel fetched 2019/10/11
 	stable = fetchGit {
-		name = "nixos-stable-19.03-2019-10-07";
+		name = "nixos-stable-19.09-2019-10-11";
 		url = git://github.com/NixOS/nixpkgs-channels;
-		ref = "nixos-19.03";
-    rev = "6420e2649fa9e267481fb78e602022dab9d1dcd1";
+		ref = "nixos-19.09";
+    rev = "dbad7c7d59f12e81032bc3100e3d9fa44b6d4e70";
 	};
   # use unstable for certain versions of packages
-	# unstable channel fetched 2019/10/07
+	# unstable channel fetched 2019/10/11
 	unstable = fetchGit {
-		name = "nixos-unstable-2019-10-07";
+		name = "nixos-unstable-2019-10-11";
 		url = git://github.com/NixOS/nixpkgs-channels;
 		ref = "nixos-unstable";
-    rev = "2436c27541b2f52deea3a4c1691216a02152e729";
+    rev = "8b46dcb3db505aa026ab6773ec34aa60a0c7e3fe";
 	};
-  # overlay fetched 2019/10/07
+  # overlay fetched 2019/10/11
   moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/d46240e8755d91bc36c0c38621af72bf5c489e13.tar.gz);
 
   # create an overlay for the qutip python library, because nixpkgs doesn't have an updated version

@@ -11,7 +11,7 @@ $ ./result/bin/emacs
 
 let
   myEmacs = pkgs.emacs;
-  emacsWithPackages = (pkgs.emacsPackagesNgGen myEmacs).emacsWithPackages;
+  emacsWithPackages = (pkgs.emacsPackagesGen myEmacs).emacsWithPackages;
 in
   emacsWithPackages (epkgs:
   (with epkgs.elpaPackages; [

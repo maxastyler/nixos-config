@@ -9,8 +9,8 @@ let
 	hostname = import ./hostname.nix;
 	home-manager = fetchGit {
 		url = git://github.com/rycee/home-manager;
-		ref = "release-19.03";
-    rev = "a85f22164d56052f027e71718c99ec0a1c3d25d1";
+		ref = "release-19.09";
+    rev = "f856c78a4a220f44b64ce5045f228cbb9d4d9f31";
 	};
 in
 {
@@ -190,6 +190,6 @@ in
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
-  system.stateVersion = "19.03"; # Did you read the comment?
+  system.stateVersion = "19.09"; # Did you read the comment?
 
 }
