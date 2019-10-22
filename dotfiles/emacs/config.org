@@ -114,6 +114,61 @@ A git porcelain for emacs
 (use-package magit
 )
 #+END_SRC
+** EVIL
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package evil
+:init 
+(setq evil-search-module 'evil-search)
+(setq evil-want-integration t)
+(setq evil-want-keybinding nil)
+(setq evil-vsplit-window-right t) ; split to right
+(setq evil-split-window-below t) ; split below
+(setq evil-want-C-u-scroll t) ; scroll with ctrl-u
+:config
+(evil-mode 1)
+)
+#+END_SRC
+** EVIL-magit
+Make evil work with magit
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package evil-magit
+:after evil magit
+)
+#+END_SRC
+** EVIL collection
+A collection of keybindings which cover the rest of the stuff evil doesn't
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package evil-collection
+:after evil ;; make sure it's started after evil
+:custom
+(evil-collection-setup-minibuffer t)
+:config
+(evil-collection-init)
+)
+#+END_SRC
+** EVIL-snipe
+   Motions to jump to a point in the buffer
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package evil-snipe
+:after evil ;; make sure it's started after evil
+:config
+(evil-snipe-mode +1)
+(evil-snipe-override-mode +1)
+(add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode) ;; fix conflict with magit
+(setq evil-snipe-scope 'visible)
+)
+#+END_SRC
+** Helm
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package helm
+    :init
+    (global-set-key (kbd "M-x") #'helm-M-x)
+    (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
+    (global-set-key (kbd "C-x C-f") #'helm-find-files)
+    :config
+    (helm-mode 1)
+  )
+#+END_SRC
 ** Emacs-async
 To allow for asynchronous stuff
 #+BEGIN_SRC emacs-lisp :results silent
@@ -129,20 +184,20 @@ A popup interface for emacs
 ** Projectile
 For managing projects in emacs
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package projectile
-:config 
-(setq projectile-completion-system 'helm)
-(projectile-mode)
-)
+  (use-package projectile
+    :config 
+    (setq projectile-completion-system 'helm)
+    (projectile-mode)
+  )
 #+END_SRC
 
 ** flycheck
 Used for code linting
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package flycheck
-:config
-(global-flycheck-mode)
-)
+  (use-package flycheck
+    :config
+    (global-flycheck-mode)
+  )
 #+END_SRC
 ** pdf-tools
 A better pdf viewer than doc-view
@@ -163,103 +218,103 @@ A better pdf viewer than doc-view
 ** winum
    Tool to allow swapping between windows with numbers
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package winum
-:init 
+  (use-package winum
+    :init 
     (setq winum-keymap
-        (let ((map (make-sparse-keymap)))
-        (define-key map (kbd "C-`") 'winum-select-window-by-number)
-        (define-key map (kbd "C-²") 'winum-select-window-by-number)
-        (define-key map (kbd "M-0") 'winum-select-window-0-or-10)
-        (define-key map (kbd "M-1") 'winum-select-window-1)
-        (define-key map (kbd "M-2") 'winum-select-window-2)
-        (define-key map (kbd "M-3") 'winum-select-window-3)
-        (define-key map (kbd "M-4") 'winum-select-window-4)
-        (define-key map (kbd "M-5") 'winum-select-window-5)
-        (define-key map (kbd "M-6") 'winum-select-window-6)
-        (define-key map (kbd "M-7") 'winum-select-window-7)
-        (define-key map (kbd "M-8") 'winum-select-window-8)
-        (define-key map (kbd "M-9") 'winum-select-window-9)
-        (define-key map (kbd "C-c M-0") (lambda () (interactive) (winum-select-window-0-or-10 t)))
-        (define-key map (kbd "C-c M-1") (lambda () (interactive) (winum-select-window-1 t)))
-        (define-key map (kbd "C-c M-2") (lambda () (interactive) (winum-select-window-2 t)))
-        (define-key map (kbd "C-c M-3") (lambda () (interactive) (winum-select-window-3 t)))
-        (define-key map (kbd "C-c M-4") (lambda () (interactive) (winum-select-window-4 t)))
-        (define-key map (kbd "C-c M-5") (lambda () (interactive) (winum-select-window-5 t)))
-        (define-key map (kbd "C-c M-6") (lambda () (interactive) (winum-select-window-6 t)))
-        (define-key map (kbd "C-c M-7") (lambda () (interactive) (winum-select-window-7 t)))
-        (define-key map (kbd "C-c M-8") (lambda () (interactive) (winum-select-window-8 t)))
-        (define-key map (kbd "C-c M-9") (lambda () (interactive) (winum-select-window-9 t)))
-        map))
-:config
+          (let ((map (make-sparse-keymap)))
+          (define-key map (kbd "C-`") 'winum-select-window-by-number)
+          (define-key map (kbd "C-²") 'winum-select-window-by-number)
+          (define-key map (kbd "M-0") 'winum-select-window-0-or-10)
+          (define-key map (kbd "M-1") 'winum-select-window-1)
+          (define-key map (kbd "M-2") 'winum-select-window-2)
+          (define-key map (kbd "M-3") 'winum-select-window-3)
+          (define-key map (kbd "M-4") 'winum-select-window-4)
+          (define-key map (kbd "M-5") 'winum-select-window-5)
+          (define-key map (kbd "M-6") 'winum-select-window-6)
+          (define-key map (kbd "M-7") 'winum-select-window-7)
+          (define-key map (kbd "M-8") 'winum-select-window-8)
+          (define-key map (kbd "M-9") 'winum-select-window-9)
+          (define-key map (kbd "C-c M-0") (lambda () (interactive) (winum-select-window-0-or-10 t)))
+          (define-key map (kbd "C-c M-1") (lambda () (interactive) (winum-select-window-1 t)))
+          (define-key map (kbd "C-c M-2") (lambda () (interactive) (winum-select-window-2 t)))
+          (define-key map (kbd "C-c M-3") (lambda () (interactive) (winum-select-window-3 t)))
+          (define-key map (kbd "C-c M-4") (lambda () (interactive) (winum-select-window-4 t)))
+          (define-key map (kbd "C-c M-5") (lambda () (interactive) (winum-select-window-5 t)))
+          (define-key map (kbd "C-c M-6") (lambda () (interactive) (winum-select-window-6 t)))
+          (define-key map (kbd "C-c M-7") (lambda () (interactive) (winum-select-window-7 t)))
+          (define-key map (kbd "C-c M-8") (lambda () (interactive) (winum-select-window-8 t)))
+          (define-key map (kbd "C-c M-9") (lambda () (interactive) (winum-select-window-9 t)))
+          map))
+    :config
     (winum-mode)
-)
+  )
 #+END_SRC
 ** tex
 A package for dealing with latex in emacs. Add a buffer local hook to compile after saving.
 
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package tex
-:ensure auctex ;; install the package if it's not installed already
-:mode ("\\.tex\\'" . TeX-latex-mode)
-:config
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
-(setq TeX-PDF-mode t)
-(setq-default TeX-master nil)
-(setq TeX-source-correlate-start-server 'synctex)
-(setq TeX-view-program-selection '(((output-dvi has-no-display-manager)
-  "dvi2tty")
- ((output-dvi style-pstricks)
-  "dvips and gv")
- (output-dvi "xdvi")
- (output-pdf "PDF Tools")
- (output-html "xdg-open")))
-:init
-(add-hook 'LaTeX-mode-hook #'my-LaTeX-mode-hooks)
-(add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
-(defun my-LaTeX-mode-hooks ()
-  (TeX-source-correlate-mode t)
-  (LaTeX-math-mode t)
-  (add-hook 'after-save-hook (lambda () (TeX-command-run-all nil)) nil t) ;; save after compilation
-)
-)
+  (use-package tex
+    :ensure auctex ;; install the package if it's not installed already
+    :mode ("\\.tex\\'" . TeX-latex-mode)
+    :config
+    (setq TeX-auto-save t)
+    (setq TeX-parse-self t)
+    (setq TeX-PDF-mode t)
+    (setq-default TeX-master nil)
+    (setq TeX-source-correlate-start-server 'synctex)
+    (setq TeX-view-program-selection '(((output-dvi has-no-display-manager)
+                                        "dvi2tty")
+                                       ((output-dvi style-pstricks)
+                                        "dvips and gv")
+                                       (output-dvi "xdvi")
+                                       (output-pdf "PDF Tools")
+                                       (output-html "xdg-open")))
+    :init
+    (add-hook 'LaTeX-mode-hook #'my-LaTeX-mode-hooks)
+    (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
+    (defun my-LaTeX-mode-hooks ()
+      (TeX-source-correlate-mode t)
+      (LaTeX-math-mode t)
+      (add-hook 'after-save-hook (lambda () (TeX-command-run-all nil)) nil t) ;; save after compilation
+      )
+  )
 #+END_SRC
 ** reftex
 A package for dealing with latex in emacs
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package reftex
-:hook (LaTeX-mode . turn-on-reftex)
-:config
-(setq reftex-plug-into-AUCTeX t)
-(setq reftex-default-bibliography '("~/git/notes/bibliography/references.bib"))
-)
+  (use-package reftex
+    :hook (LaTeX-mode . turn-on-reftex)
+    :config
+    (setq reftex-plug-into-AUCTeX t)
+    (setq reftex-default-bibliography '("~/git/notes/bibliography/references.bib"))
+  )
 #+END_SRC
-
 ** org
 Organisation package
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package org
-  :config
-  (setq org-return-follows-link t)
-  (setq org-directory "~/git/notes")
-  (setq org-default-notes-file (concat org-directory "/notes.org"))
-  (setq org-agenda-files (list org-directory))
-  ;; set up my keymaps
-  (global-set-key (kbd "C-c l") 'org-store-link)
-  (global-set-key (kbd "C-c a") 'org-agenda)
-  (global-set-key (kbd "C-c c") 'org-capture)
-  ;; set up my capture templates
-  (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
-           "* TODO %?\n  %i\n  %a")
-          ("j" "Journal" entry (file+datetree org-default-notes-file)
-           "* %?\nEntered on %U\n  %i\n  %a")))
-  (org-babel-do-load-languages ;; load the languages for org-babel
-   'org-babel-load-languages
-   '((python . t)
-   (emacs-lisp . t)
-   (C . t)
-   ))
+    :config
+    (setq org-return-follows-link t)
+    (setq org-directory "~/git/notes")
+    (setq org-default-notes-file (concat org-directory "/notes.org"))
+    (setq org-agenda-files (list org-directory))
+    ;; set up my keymaps
+    (global-set-key (kbd "C-c l") 'org-store-link)
+    (global-set-key (kbd "C-c a") 'org-agenda)
+    (global-set-key (kbd "C-c c") 'org-capture)
+    ;; set up my capture templates
+    (setq org-capture-templates
+          '(("t" "Todo" entry (file+headline org-default-notes-file "Tasks")
+             "* TODO %?\n  %i\n  %a")
+            ("j" "Journal" entry (file+datetree org-default-notes-file)
+             "* %?\nEntered on %U\n  %i\n  %a")))
+    (org-babel-do-load-languages ;; load the languages for org-babel
+     'org-babel-load-languages
+     '((python . t)
+       (emacs-lisp . t)
+       (C . t)
+       )
+     )
   )
 #+END_SRC
 ** org-bullets
@@ -279,45 +334,45 @@ Org reference manager
       org-ref-pdf-directory "~/git/notes/bibliography/pdfs/")
 )
 #+END_SRC
-** ivy-bibtex
-   Use ivy to search through bibtex
+** helm-bibtex
+   Use helm to search through bibtex
 #+BEGIN_SRC emacs-lisp :results silent
-  ;; (use-package ivy-bibtex
-  ;; :after ivy
-  ;; :config
-  ;; (setq ivy-re-builders-alist
-  ;;       '((ivy-bibtex . ivy--regex-ignore-order)
-  ;;         (t . ivy--regex-plus)))
-  ;; (setq bibtex-completion-bibliography
-  ;;       '("~/git/notes/bibliography/references.bib"))
-  ;; (setq bibtex-completion-library-path '("~/git/notes/bibliography/pdfs/"))
-  ;; (setq bibtex-completion-notes-path "~/git/notes/bibliography/bib_notes.org")
-  ;; )
+  (use-package helm-bibtex
+    :after helm
+    :config
+    (setq ivy-re-builders-alist
+          '((ivy-bibtex . ivy--regex-ignore-order)
+            (t . ivy--regex-plus)))
+    (setq bibtex-completion-bibliography
+          '("~/git/notes/bibliography/references.bib"))
+    (setq bibtex-completion-library-path '("~/git/notes/bibliography/pdfs/"))
+    (setq bibtex-completion-notes-path "~/git/notes/bibliography/bib_notes.org")
+    )
 #+END_SRC
 ** company
 Organisation package
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package company
-:ensure t ;; install the package if it's not installed already
-:init
-(add-hook 'after-init-hook 'global-company-mode)
-:config
-(setq company-minimum-prefix-length 2) ;; start completing after 2 characters
-(setq company-idle-delay 0.2) ;; start completing after 2 characters
-(define-key company-active-map (kbd "C-w") nil) ;; make ctrl-W still kill back a word when completing
-(add-hook 'racer-mode-hook #'company-mode)
-)
+  (use-package company
+    :ensure t ;; install the package if it's not installed already
+    :init
+    (add-hook 'after-init-hook 'global-company-mode)
+    :config
+    (setq company-minimum-prefix-length 2) ;; start completing after 2 characters
+    (setq company-idle-delay 0.2) ;; start completing after 2 characters
+    (define-key company-active-map (kbd "C-w") nil) ;; make ctrl-W still kill back a word when completing
+    (add-hook 'racer-mode-hook #'company-mode)
+  )
 #+END_SRC
 
 ** Multi Term
 Allow multiple terminals
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package multi-term
-:config
-(setq multi-term-program "/run/current-system/sw/bin/bash")
-(global-set-key (kbd "C-c t t") 'multi-term-dedicated-toggle)
-(global-set-key (kbd "C-c t n") 'multi-term)
-(global-set-key (kbd "C-c t f") 'multi-term-next)
-(global-set-key (kbd "C-c t b") 'multi-term-prev)
-)
+  (use-package multi-term
+    :config
+    (setq multi-term-program "/run/current-system/sw/bin/bash")
+    (global-set-key (kbd "C-c t t") 'multi-term-dedicated-toggle)
+    (global-set-key (kbd "C-c t n") 'multi-term)
+    (global-set-key (kbd "C-c t f") 'multi-term-next)
+    (global-set-key (kbd "C-c t b") 'multi-term-prev)
+  )
 #+END_SRC
