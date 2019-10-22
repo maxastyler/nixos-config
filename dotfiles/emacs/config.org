@@ -165,6 +165,7 @@ A collection of keybindings which cover the rest of the stuff evil doesn't
     (global-set-key (kbd "M-x") #'helm-M-x)
     (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
     (global-set-key (kbd "C-x C-f") #'helm-find-files)
+    (setq helm-default-display-buffer-functions '(display-buffer-in-side-window))
     :config
     (helm-mode 1)
   )
@@ -340,9 +341,6 @@ Org reference manager
   (use-package helm-bibtex
     :after helm
     :config
-    (setq ivy-re-builders-alist
-          '((ivy-bibtex . ivy--regex-ignore-order)
-            (t . ivy--regex-plus)))
     (setq bibtex-completion-bibliography
           '("~/git/notes/bibliography/references.bib"))
     (setq bibtex-completion-library-path '("~/git/notes/bibliography/pdfs/"))
