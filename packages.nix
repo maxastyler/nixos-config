@@ -95,7 +95,7 @@ in {
       leiningen
 		  vim 
 		  neovim
-		  (python3.withPackages(ps: with ps; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy jedi flake8 yapf rope pyqt5 numba jupyter pyls ]))
+		  (python3.withPackages(ps: with ps; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy jedi flake8 yapf rope pyqt5 numba jupyter python-language-server ]))
 		  pydb # python debugger
 		  binutils
 		  gcc
