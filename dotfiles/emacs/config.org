@@ -351,14 +351,12 @@ Org reference manager
 Organisation package
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package company
-    :ensure t ;; install the package if it's not installed already
     :init
     (add-hook 'after-init-hook 'global-company-mode)
     :config
     (setq company-minimum-prefix-length 2) ;; start completing after 2 characters
     (setq company-idle-delay 0.2) ;; start completing after 2 characters
     (define-key company-active-map (kbd "C-w") nil) ;; make ctrl-W still kill back a word when completing
-    (add-hook 'racer-mode-hook #'company-mode)
   )
 #+END_SRC
 
@@ -372,5 +370,14 @@ Allow multiple terminals
     (global-set-key (kbd "C-c t n") 'multi-term)
     (global-set-key (kbd "C-c t f") 'multi-term-next)
     (global-set-key (kbd "C-c t b") 'multi-term-prev)
+  )
+#+END_SRC
+
+** Rainbow Delimiters
+Colour matching parens
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package rainbow-delimiters
+    :config
+    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
   )
 #+END_SRC
