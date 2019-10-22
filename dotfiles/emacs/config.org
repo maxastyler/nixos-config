@@ -53,9 +53,10 @@ When using racer jump to definition, evil mode doesn't record the jumps correctl
    confirm-kill-emacs 'yes-or-no-p 	; confirmation when killing emacs
    indent-tabs-mode nil 			; don't use tabs to indent
    select-enable-clipboard t 		; use the system clipboard
+   gc-cons-threshold 3200000        ; set the garbage collection threshold higher
    ;; inhibit-startup-screen t
    initial-scratch-message nil
-   ;; initial-major-mode 'org-mode
+   initial-major-mode 'org-mode
    doc-view-continuous t        ; in doc mode, scroll over pages
    backup-directory-alist `(("." . "~/.emacs.d/backups")) ; which directory to put backups file
    auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)) ;transform backups file name
@@ -378,6 +379,52 @@ Colour matching parens
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package rainbow-delimiters
     :config
-    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+    (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
   )
+#+END_SRC
+** lsp-mode
+   Language server protocol integration
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package lsp-mode
+    :config
+    (add-hook 'python-mode-hook #'lsp)
+    (add-hook 'python-mode-hook #'flycheck-mode)
+    (add-hook 'rust-mode-hook #'lsp)
+    (add-hook 'rust-mode-hook #'flycheck-mode)
+    )
+#+END_SRC
+** lsp-ui
+   Language server protocol fancy ui stuff
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package lsp-ui
+    :after (lsp-mode flycheck)
+    :config
+    (add-hook 'lsp-mode-hook #'lsp-ui-mode)
+    )
+#+END_SRC
+
+** company-lsp 
+   Language server protocol integration with company
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package company-lsp
+    :after (lsp-mode company)
+    :config
+    (push 'company-lsp company-backends)
+    )
+#+END_SRC
+
+** yasnippet 
+   Snippets
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package yasnippet
+    )
+#+END_SRC
+
+** rustic 
+   Nice rust mode
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package rustic
+    :config 
+    (add-hook 'rust-mode-hook #'rustic)
+    )
 #+END_SRC

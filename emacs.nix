@@ -32,6 +32,9 @@ in
     counsel
     counsel-projectile
     popup
+    lsp-mode
+    lsp-ui
+    company-lsp
     flycheck
     org-bullets
     org-ref
@@ -49,4 +52,6 @@ in
     winum
     rainbow-delimiters
     ivy-bibtex
+    yasnippet
+    rustic
   ]))
