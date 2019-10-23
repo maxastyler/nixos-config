@@ -443,3 +443,11 @@ Colour matching parens
   (use-package ripgrep
     )
 #+END_SRC
+
+** Swiper
+#+BEGIN_SRC emacs-lisp :results silent
+(use-package swiper
+:config 
+(global-set-key (kbd "C-s") 'swiper)
+)
+#+END_SRC
