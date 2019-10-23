@@ -196,6 +196,9 @@ A popup interface for emacs
 For managing projects in emacs
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package projectile
+    :init
+    (global-set-key (kbd "C-c C-f") #'projectile-find-file)
+    (global-set-key (kbd "C-c C-p") #'projectile-switch-project)
     :config 
     (setq projectile-completion-system 'helm)
     (projectile-mode)
@@ -442,12 +445,4 @@ Colour matching parens
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package ripgrep
     )
-#+END_SRC
-
-** Swiper
-#+BEGIN_SRC emacs-lisp :results silent
-(use-package swiper
-:config 
-(global-set-key (kbd "C-s") 'swiper)
-)
 #+END_SRC
