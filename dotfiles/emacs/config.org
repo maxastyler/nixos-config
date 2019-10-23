@@ -117,17 +117,18 @@ A git porcelain for emacs
 #+END_SRC
 ** EVIL
 #+BEGIN_SRC emacs-lisp :results silent
-(use-package evil
-:init 
-(setq evil-search-module 'evil-search)
-(setq evil-want-integration t)
-(setq evil-want-keybinding nil)
-(setq evil-vsplit-window-right t) ; split to right
-(setq evil-split-window-below t) ; split below
-(setq evil-want-C-u-scroll t) ; scroll with ctrl-u
-:config
-(evil-mode 1)
-)
+  (use-package evil
+    :init 
+    (setq evil-search-module 'evil-search)
+    (setq evil-want-integration t)
+    (setq evil-want-keybinding nil)
+    (setq evil-vsplit-window-right t) ; split to right
+    (setq evil-split-window-below t) ; split below
+    ;; (setq evil-want-C-u-scroll nil) ; scroll with ctrl-u
+    (global-set-key (kbd "C-b") #'evil-scroll-up) ; scroll up with C-b
+    :config
+    (evil-mode 1)
+  )
 #+END_SRC
 ** EVIL-magit
 Make evil work with magit
@@ -167,8 +168,16 @@ A collection of keybindings which cover the rest of the stuff evil doesn't
     (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
     (global-set-key (kbd "C-x C-f") #'helm-find-files)
     (setq helm-default-display-buffer-functions '(display-buffer-in-side-window))
+    (setq helm-display-buffer-default-height 15)
     :config
     (helm-mode 1)
+  )
+#+END_SRC
+** Helm Swoop
+   Package for doing isearch kinda stuff
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package helm-swoop
+    :after (helm)
   )
 #+END_SRC
 ** Emacs-async
@@ -419,12 +428,18 @@ Colour matching parens
   (use-package yasnippet
     )
 #+END_SRC
-
 ** rustic 
    Nice rust mode
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package rustic
     :config 
     (add-hook 'rust-mode-hook #'rustic)
+    )
+#+END_SRC
+
+** ripgrep
+   Front end for ripgrep
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package ripgrep
     )
 #+END_SRC

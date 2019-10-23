@@ -54,4 +54,8 @@ in
     ivy-bibtex
     yasnippet
     rustic
+    ripgrep
+    helm-swoop
+    cider
+    clojure-mode
   ]))
