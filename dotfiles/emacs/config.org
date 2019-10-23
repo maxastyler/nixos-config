@@ -124,7 +124,7 @@ A git porcelain for emacs
     (setq evil-want-keybinding nil)
     (setq evil-vsplit-window-right t) ; split to right
     (setq evil-split-window-below t) ; split below
-    (setq evil-want-C-u-scroll nil) ; scroll with ctrl-u
+    (setq evil-want-C-u-scroll t) ; scroll with ctrl-u
     :config
     (evil-mode 1)
   )
