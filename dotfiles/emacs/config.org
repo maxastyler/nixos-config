@@ -400,8 +400,8 @@ Colour matching parens
     :config
     (add-hook 'python-mode-hook #'lsp)
     (add-hook 'python-mode-hook #'flycheck-mode)
-    (add-hook 'rust-mode-hook #'lsp)
-    (add-hook 'rust-mode-hook #'flycheck-mode)
+    ;; (add-hook 'rust-mode-hook #'lsp)
+    ;; (add-hook 'rust-mode-hook #'flycheck-mode)
     )
 #+END_SRC
 ** lsp-ui
@@ -435,7 +435,7 @@ Colour matching parens
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package rustic
     :config 
-    (add-hook 'rust-mode-hook #'rustic)
+    (add-hook 'rust-mode-hook #'rustic-mode)
     )
 #+END_SRC
 
