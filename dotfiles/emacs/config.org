@@ -46,7 +46,7 @@ When using racer jump to definition, evil mode doesn't record the jumps correctl
 [[https://www.masteringemacs.org/article/mastering-key-bindings-emacs]] is a guide for emacs keymaps.
 ** EVIL mode guide
 [[https://github.com/noctuid/evil-guide]] is a guide for EVIL mode
-* basic Setup
+* Basic Setup
 ** Set Some Default Variables
 #+BEGIN_SRC emacs-lisp :results silent
   (setq-default
@@ -88,6 +88,10 @@ Use this directory instead of pumping out backup files into the wild
 (setq-default 
     use-package-always-ensure t
 )
+#+END_SRC
+** Add matching parentheses to prog modes
+#+BEGIN_SRC emacs-lisp :results silent
+  (add-hook 'prog-mode-hook #'show-paren-mode)
 #+END_SRC
 * Other Packages
 ** Undo tree
@@ -177,6 +181,26 @@ A collection of keybindings which cover the rest of the stuff evil doesn't
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package helm-swoop
     :after (helm)
+    :config
+    ;; C-s in a buffer: open helm-swoop with empty search field
+    (global-set-key (kbd "C-s") 'helm-swoop)
+    (with-eval-after-load 'helm-swoop
+      (setq helm-swoop-pre-input-function
+            (lambda () nil)))
+
+    ;; C-s in helm-swoop with empty search field: activate previous search.
+    ;; C-s in helm-swoop with non-empty search field: go to next match.
+    (with-eval-after-load 'helm-swoop
+      (define-key helm-swoop-map (kbd "C-s") 'tl/helm-swoop-C-s))
+
+    (defun tl/helm-swoop-C-s ()
+      (interactive)
+      (if (boundp 'helm-swoop-pattern)
+          (if (equal helm-swoop-pattern "")
+              (previous-history-element 1)
+            (helm-next-line))
+        (helm-next-line)
+        ))
   )
 #+END_SRC
 ** Emacs-async
@@ -445,3 +469,27 @@ Colour matching parens
   (use-package ripgrep
     )
 #+END_SRC
+
+** clojure-mode
+   Add a clojure mode
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package clojure-mode
+    )
+#+END_SRC
+
+** cider
+   Add nicer repl interaction to clojure mode
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package cider
+    :config
+    (add-hook 'clojure-mode-hook #'cider-mode))
+#+END_SRC
+
+** dracula-theme
+   Add dracula theme
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package dracula-theme
+    :config
+    (load-theme 'dracula t))
+#+END_SRC
+
