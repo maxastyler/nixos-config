@@ -58,5 +58,5 @@ in
     helm-swoop
     cider
     clojure-mode
-    dracula
+    dracula-theme
   ]))
