@@ -485,6 +485,11 @@ Colour matching parens
     (add-hook 'clojure-mode-hook #'cider-mode))
 #+END_SRC
 
+** Verilog mode
+   Install the new verilog mode
+#+BEGIN_SRC emacs-lisp :results silent
+  (use-package verilog-mode)
+#+END_SRC
 ** dracula-theme
    Add dracula theme
 #+BEGIN_SRC emacs-lisp :results silent

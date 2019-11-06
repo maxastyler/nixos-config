@@ -307,4 +307,7 @@ bar {
     }
 }
 
+# set the background
+output "*" bg /etc/nixos/nixos-config/wallpapers/nix-wallpaper-simple-light-gray.png fill
+
 include /etc/sway/config.d/*

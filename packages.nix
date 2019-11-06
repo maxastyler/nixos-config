@@ -130,5 +130,6 @@ in {
 		  qtcreator
       xournalpp # note taking app with pen support
       gnome3.adwaita-icon-theme
+      gtkwave
 	  ];
 }
