@@ -89,13 +89,17 @@ in {
 	 	  poppler
 		  libpng
 		  fzf
+		  anydesk
 		  #-- programming --#
       verilog # can remove after the verilog course
       clojure
       leiningen
 		  vim 
 		  neovim
-		  (python3.withPackages(ps: with ps; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy jedi flake8 yapf rope pyqt5 numba jupyter python-language-server ]))
+      (python3.buildEnv.override {
+        extraLibs = with python3Packages; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy jedi flake8 yapf rope pyqt5 numba jupyter python-language-server adaptive pyqtgraph ];
+        ignoreCollisions = true;
+      })
 		  pydb # python debugger
 		  binutils
 		  gcc
