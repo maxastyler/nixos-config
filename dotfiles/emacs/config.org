@@ -350,6 +350,7 @@ Organisation package
      '((python . t)
        (emacs-lisp . t)
        (C . t)
+       (latex . t)
        )
      )
   )
