@@ -119,50 +119,50 @@ A git porcelain for emacs
 (use-package magit
 )
 #+END_SRC
-** EVIL
-#+BEGIN_SRC emacs-lisp :results silent
-  (use-package evil
-    :init 
-    (setq evil-search-module 'evil-search)
-    (setq evil-want-integration t)
-    (setq evil-want-keybinding nil)
-    (setq evil-vsplit-window-right t) ; split to right
-    (setq evil-split-window-below t) ; split below
-    (setq evil-want-C-u-scroll t) ; scroll with ctrl-u
-    :config
-    (evil-mode 1)
-  )
-#+END_SRC
-** EVIL-magit
-Make evil work with magit
-#+BEGIN_SRC emacs-lisp :results silent
-(use-package evil-magit
-:after evil magit
-)
-#+END_SRC
-** EVIL collection
-A collection of keybindings which cover the rest of the stuff evil doesn't
-#+BEGIN_SRC emacs-lisp :results silent
-(use-package evil-collection
-:after evil ;; make sure it's started after evil
-:custom
-(evil-collection-setup-minibuffer t)
-:config
-(evil-collection-init)
-)
-#+END_SRC
-** EVIL-snipe
-   Motions to jump to a point in the buffer
-#+BEGIN_SRC emacs-lisp :results silent
-(use-package evil-snipe
-:after evil ;; make sure it's started after evil
-:config
-(evil-snipe-mode +1)
-(evil-snipe-override-mode +1)
-(add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode) ;; fix conflict with magit
-(setq evil-snipe-scope 'visible)
-)
-#+END_SRC
+# ** EVIL
+# #+BEGIN_SRC emacs-lisp :results silent
+#   (use-package evil
+#     :init 
+#     (setq evil-search-module 'evil-search)
+#     (setq evil-want-integration t)
+#     (setq evil-want-keybinding nil)
+#     (setq evil-vsplit-window-right t) ; split to right
+#     (setq evil-split-window-below t) ; split below
+#     (setq evil-want-C-u-scroll t) ; scroll with ctrl-u
+#     :config
+#     (evil-mode 1)
+#   )
+# #+END_SRC
+# ** EVIL-magit
+# Make evil work with magit
+# #+BEGIN_SRC emacs-lisp :results silent
+# (use-package evil-magit
+# :after evil magit
+# )
+# #+END_SRC
+# ** EVIL collection
+# A collection of keybindings which cover the rest of the stuff evil doesn't
+# #+BEGIN_SRC emacs-lisp :results silent
+# (use-package evil-collection
+# :after evil ;; make sure it's started after evil
+# :custom
+# (evil-collection-setup-minibuffer t)
+# :config
+# (evil-collection-init)
+# )
+# #+END_SRC
+# ** EVIL-snipe
+#    Motions to jump to a point in the buffer
+# #+BEGIN_SRC emacs-lisp :results silent
+# (use-package evil-snipe
+# :after evil ;; make sure it's started after evil
+# :config
+# (evil-snipe-mode +1)
+# (evil-snipe-override-mode +1)
+# (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode) ;; fix conflict with magit
+# (setq evil-snipe-scope 'visible)
+# )
+# #+END_SRC
 ** Helm
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package helm
