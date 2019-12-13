@@ -19,7 +19,8 @@ let
     rev = "8b46dcb3db505aa026ab6773ec34aa60a0c7e3fe";
 	};
   # overlay fetched 2019/10/11
-  moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/d46240e8755d91bc36c0c38621af72bf5c489e13.tar.gz);
+  # moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/d46240e8755d91bc36c0c38621af72bf5c489e13.tar.gz);
+  moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz);
 
   # create an overlay for the qutip python library, because nixpkgs doesn't have an updated version
   qutip_overlay = self: super: {
@@ -48,19 +49,19 @@ in {
 		config.allowUnfree = true;
 
 		# override the original package set with the unstable set
-		config.packageOverrides = oldPkgs: stable // {
-    };
+		# config.packageOverrides = oldPkgs: stable // {
+    # };
 
     # add in overlays
     overlays = [ moz_overlay qutip_overlay blender_overlay ];
 	};
 
 	environment.systemPackages = let
-    myRust = ((pkgs.rustChannelOf { date = "2019-08-10"; channel = "nightly"; }).rust.override {
-    extensions = [
-               "rust-src"
-               "rustfmt-preview"
-    ];
+    myRust = ((pkgs.rustChannelOf { date = "2019-12-09"; channel = "nightly"; }).rust.override {
+      extensions = [
+        "rust-src"
+        "rustfmt-preview"
+      ];
     }); in
     with pkgs; [
 		  #-- system stuff --#
@@ -96,7 +97,28 @@ in {
 		  vim 
 		  neovim
       (python3.buildEnv.override {
-        extraLibs = with python3Packages; [ numpy matplotlib pynvim pygobject3 ipython pip tkinter scipy palettable pygments pyaudio mypy jedi flake8 yapf rope pyqt5 numba jupyter python-language-server pyqtgraph ];
+        extraLibs = with python3Packages; [ numpy
+                                            matplotlib
+                                            pynvim
+                                            pygobject3
+                                            ipython
+                                            pip
+                                            tkinter
+                                            scipy
+                                            palettable
+                                            pygments
+                                            pyaudio
+                                            mypy
+                                            jedi
+                                            flake8
+                                            yapf
+                                            rope
+                                            pyqt5
+                                            numba
+                                            jupyter
+                                            python-language-server
+                                            pyqtgraph
+                                            pandas ];
         ignoreCollisions = true;
       })
 		  pydb # python debugger
@@ -116,7 +138,7 @@ in {
 		  firefox 
 		  google-chrome
 		  gimp 
-		  blender 
+		  # blender 
 		  lxappearance
 		  adapta-gtk-theme
 		  numix-icon-theme
