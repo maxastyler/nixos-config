@@ -10,7 +10,7 @@ let
 	home-manager = fetchGit {
 		url = git://github.com/rycee/home-manager;
 		ref = "release-19.09";
-    rev = "f856c78a4a220f44b64ce5045f228cbb9d4d9f31";
+    rev = "9bdfdfe14e03786f767eb3224e53713d34c70ced";
 	};
 in
 {
