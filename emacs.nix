@@ -20,43 +20,45 @@ in
     org
   ]) ++
   (with epkgs.melpaPackages; [
-    evil
-    evil-magit
-    evil-collection
-    evil-snipe
-    which-key
-    async
-    ivy
-    swiper
-    eyebrowse
-    counsel
-    counsel-projectile
-    popup
-    lsp-mode
-    lsp-ui
-    company-lsp
-    flycheck
-    org-bullets
-    org-ref
-    company
-    company-anaconda
-    company-reftex
-    company-auctex
-    rust-mode
-    racer
-    cargo
     anaconda-mode
-    nix-mode
-    py-yapf
-    spaceline
-    winum
-    rainbow-delimiters
-    ivy-bibtex
-    yasnippet
-    rustic
-    ripgrep
-    helm-swoop
+    async
+    cargo
     cider
     clojure-mode
+    company
+    company-anaconda
+    company-auctex
+    company-lsp
+    company-reftex
+    counsel
+    counsel-projectile
+    doom-modeline
     dracula-theme
+    evil
+    evil-collection
+    evil-magit
+    evil-snipe
+    eyebrowse
+    flycheck
+    helm-swoop
+    ivy
+    ivy-bibtex
+    lsp-mode
+    lsp-ui
+    nix-mode
+    org-bullets
+    org-ref
+    popup
+    py-yapf
+    racer
+    rainbow-delimiters
+    ripgrep
+    rust-mode
+    rustic
+    spaceline
+    swiper
+    which-key
+    winum
+    yasnippet
+    yasnippet-snippets
   ]))
