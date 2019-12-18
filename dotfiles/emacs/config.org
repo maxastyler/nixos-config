@@ -136,7 +136,11 @@ Organisation package
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package doom-modeline
         :ensure t
-        :hook (after-init . doom-modeline-mode))
+        :hook (after-init . doom-modeline-mode)
+        :config
+        (setq doom-modeline-height 1)
+        (set-face-attribute 'mode-line nil :height 100)
+        (set-face-attribute 'mode-line-inactive nil :height 100))
 #+END_SRC
    
 ** dracula-theme
@@ -330,9 +334,7 @@ Organisation package
        (emacs-lisp . t)
        (C . t)
        (latex . t)
-       )
-     )
-  )
+       (clojure . t))))
 #+END_SRC
 ** org-bullets
 Get nice bullet points in org
@@ -513,3 +515,10 @@ Official snippets for yasnippet
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package yasnippet-snippets)
 #+END_SRC
+** Lispy 
+A package for editing lisp code
+#+begin_src emacs-lisp :results silent
+  (use-package lispy
+    :config
+    (add-hook 'emacs-lisp-mode (lambda () (lispy-mode 1))))
+#+end_src

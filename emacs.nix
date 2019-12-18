@@ -43,6 +43,7 @@ in
     helm-swoop
     ivy
     ivy-bibtex
+    lispy
     lsp-mode
     lsp-ui
     nix-mode
