@@ -65,31 +65,32 @@ in {
     }); in
     with pkgs; [
 		  #-- system stuff --#
-		  wget 
-		  rclone # working with cloud storage
-		  networkmanager 
-		  git 
-		  stow 
-		  pavucontrol 
-		  light # controls the backlight
-		  ripgrep 
-		  pdfgrep # search through pdf documents
-		  fd
-		  zip
-		  unzip
-		  unrar
-		  ranger
-		  tree
 		  exa # an ls replacement
-		  nix-index
-		  htop
-		  imagemagick
-		  usbutils
+		  fd
+		  fzf
+		  git 
 		  git-crypt
 		  gnupg
-	 	  poppler
+		  htop
+		  imagemagick
 		  libpng
-		  fzf
+		  light # controls the backlight
+		  networkmanager 
+		  nix-index
+		  pavucontrol 
+		  pdfgrep # search through pdf documents
+		  ranger
+		  rclone # working with cloud storage
+		  ripgrep 
+		  stow 
+		  tree
+		  unrar
+		  unzip
+		  usbutils
+		  wget 
+		  zip
+	 	  poppler
+      emacs-all-the-icons-fonts
 		  #-- programming --#
       verilog # can remove after the verilog course
       clojure
