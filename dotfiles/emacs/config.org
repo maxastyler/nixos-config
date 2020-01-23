@@ -122,16 +122,6 @@ Organisation package
   )
 #+END_SRC
 
-** company-lsp 
-   Language server protocol integration with company
-#+BEGIN_SRC emacs-lisp :results silent
-  (use-package company-lsp
-    :after (lsp-mode company)
-    :config
-    (push 'company-lsp company-backends)
-    )
-#+END_SRC
-
 ** Doom Modeline
 #+BEGIN_SRC emacs-lisp :results silent
   (use-package doom-modeline
@@ -150,6 +140,18 @@ Organisation package
     :config
     (load-theme 'dracula t))
 #+END_SRC
+
+** ELPY
+A nice python mode
+#+begin_src emacs-lisp :results silent
+    (use-package elpy
+      :defer t
+      :init
+      (advice-add 'python-mode :before 'elpy-enable)
+      :config
+      (add-hook 'python-mode-hook #'elpy-mode)
+  )
+#+end_src
 
 ** Emacs-async
 To allow for asynchronous stuff
@@ -225,27 +227,6 @@ Used for code linting
         ))
   )
 #+END_SRC
-** lsp-mode
-   Language server protocol integration
-#+BEGIN_SRC emacs-lisp :results silent
-  (use-package lsp-mode
-    :config
-    (add-hook 'python-mode-hook #'lsp)
-    (add-hook 'python-mode-hook #'flycheck-mode)
-    ;; (add-hook 'rust-mode-hook #'lsp)
-    ;; (add-hook 'rust-mode-hook #'flycheck-mode)
-    )
-#+END_SRC
-** lsp-ui
-   Language server protocol fancy ui stuff
-#+BEGIN_SRC emacs-lisp :results silent
-  (use-package lsp-ui
-    :after (lsp-mode flycheck)
-    :config
-    (add-hook 'lsp-mode-hook #'lsp-ui-mode)
-    )
-#+END_SRC
-
 ** Magit
 A git porcelain for emacs
 #+BEGIN_SRC emacs-lisp :results silent

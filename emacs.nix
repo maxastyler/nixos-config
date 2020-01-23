@@ -10,7 +10,7 @@ $ ./result/bin/emacs
 { pkgs ? import <nixpkgs> {} }:
 
 let
-  myEmacs = pkgs.emacs;
+  myEmacs = pkgs.emacsGit;
   emacsWithPackages = (pkgs.emacsPackagesGen myEmacs).emacsWithPackages;
 in
   emacsWithPackages (epkgs:
@@ -20,7 +20,6 @@ in
     org
   ]) ++
   (with epkgs.melpaPackages; [
-    anaconda-mode
     async
     cargo
     cider
@@ -28,7 +27,6 @@ in
     company
     company-anaconda
     company-auctex
-    company-lsp
     company-reftex
     counsel
     counsel-projectile
@@ -38,14 +36,13 @@ in
     evil-collection
     evil-magit
     evil-snipe
+    elpy
     eyebrowse
     flycheck
     helm-swoop
     ivy
     ivy-bibtex
     lispy
-    lsp-mode
-    lsp-ui
     nix-mode
     org-bullets
     org-ref

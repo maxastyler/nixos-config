@@ -21,6 +21,7 @@ let
   # overlay fetched 2019/10/11
   # moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/d46240e8755d91bc36c0c38621af72bf5c489e13.tar.gz);
   moz_overlay = import (builtins.fetchTarball https://github.com/mozilla/nixpkgs-mozilla/archive/master.tar.gz);
+  emacs_overlay = import (builtins.fetchTarball https://github.com/nix-community/emacs-overlay/archive/master.tar.gz);
 
   # create an overlay for the qutip python library, because nixpkgs doesn't have an updated version
   qutip_overlay = self: super: {
@@ -53,7 +54,7 @@ in {
     # };
 
     # add in overlays
-    overlays = [ moz_overlay qutip_overlay blender_overlay ];
+    overlays = [ moz_overlay qutip_overlay blender_overlay emacs_overlay ];
 	};
 
 	environment.systemPackages = let
@@ -92,9 +93,12 @@ in {
 	 	  poppler
       emacs-all-the-icons-fonts
 		  #-- programming --#
+      imagemagick
       verilog # can remove after the verilog course
       clojure
       leiningen
+      yarn
+      nodejs
 		  vim 
 		  neovim
       (python3.buildEnv.override {
@@ -154,6 +158,7 @@ in {
 		  gzdoom # doom port
 		  sxiv # image viewer
 		  qtcreator
+		  steam-run-native
       xournalpp # note taking app with pen support
       gnome3.adwaita-icon-theme
       gtkwave
