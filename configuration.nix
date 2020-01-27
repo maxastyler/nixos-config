@@ -34,8 +34,8 @@ in
 
 	xdg.configFile."sway/config".source = ./dotfiles/sway/.config/sway/config;
 	xdg.configFile."sway/status.sh".source = ./dotfiles/sway/.config/sway/status.sh;
-	home.file.".emacs.d/init.el".source = ./dotfiles/emacs/init.el;
-	home.file.".emacs.d/config.org".source = ./dotfiles/emacs/config.org;
+	# home.file.".emacs.d/init.el".source = ./dotfiles/emacs/init.el;
+	# home.file.".emacs.d/config.org".source = ./dotfiles/emacs/config.org;
   };
 
   # Use the systemd-boot EFI boot loader.
