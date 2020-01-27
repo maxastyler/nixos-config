@@ -142,7 +142,10 @@ in {
 		  slurp # select a region in wayland
 		  firefox 
 		  google-chrome
-		  gimp 
+		  gimp
+      # fonts
+      iosevka
+      libre-baskerville
 		  # blender 
 		  lxappearance
 		  adapta-gtk-theme
