@@ -54,7 +54,7 @@ in {
     # };
 
     # add in overlays
-    overlays = [ moz_overlay qutip_overlay blender_overlay emacs_overlay ];
+    overlays = [ moz_overlay qutip_overlay emacs_overlay ];
 	};
 
 	environment.systemPackages = let
@@ -93,6 +93,7 @@ in {
 	 	  poppler
       emacs-all-the-icons-fonts
 		  #-- programming --#
+      nixfmt # formatter for nix
       imagemagick
       verilog # can remove after the verilog course
       clojure
@@ -135,6 +136,7 @@ in {
 		  qt5.full
 		  #-- desktop --#
       myRust
+      pstoedit # needed for latex text in inkscape
 		  alacritty
 		  sway 
 		  mako # notifications for wayland
@@ -146,7 +148,7 @@ in {
       # fonts
       iosevka
       libre-baskerville
-		  # blender 
+		  blender 
 		  lxappearance
 		  adapta-gtk-theme
 		  numix-icon-theme
