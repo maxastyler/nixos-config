@@ -1,13 +1,12 @@
-/*
-To build the project, type the following from the current directory:
+/* To build the project, type the following from the current directory:
 
-$ nix-build emacs.nix
+   $ nix-build emacs.nix
 
-To run the newly compiled executable:
+   To run the newly compiled executable:
 
-$ ./result/bin/emacs
+   $ ./result/bin/emacs
 */
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixpkgs> { } }:
 
 pkgs.emacsGit
 # let
