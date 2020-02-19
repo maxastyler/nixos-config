@@ -148,7 +148,7 @@ in {
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
-  # services.xserver.layout = "us";
+  # services.xserver.layout = "gb";
   # services.xserver.xkbOptions = "eurosign:e";
 
   # Enable touchpad support.
@@ -157,6 +157,9 @@ in {
   # Enable the KDE Desktop Environment.
   # services.xserver.displayManager.sddm.enable = true;
   # services.xserver.desktopManager.plasma5.enable = true;
+
+  # Enable stumpwm
+  # services.xserver.windowManager.stumpwm.enable = true;
 
   # Enable sway
   programs.sway.enable = true;

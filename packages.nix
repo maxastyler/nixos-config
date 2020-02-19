@@ -62,7 +62,7 @@ in {
   environment.systemPackages = let
     myRust = ((pkgs.rustChannelOf {
       channel = "nightly";
-    }).rust.override { extensions = [ "rust-src" "rustfmt-preview" "clippy-preview" "rls-preview" ]; });
+    }).rust.override { extensions = [ "rust-src" "rustfmt-preview" "rls-preview" ]; });
   in with pkgs; [
     #-- system stuff --#
     exa # an ls replacement
@@ -92,6 +92,7 @@ in {
     poppler
     emacs-all-the-icons-fonts
     #-- programming --#
+    direnv
     nixfmt # formatter for nix
     imagemagick
     verilog # can remove after the verilog course
@@ -100,7 +101,7 @@ in {
     yarn
     nodejs
     vim
-    neovim
+    # neovim
     (python3.buildEnv.override {
       extraLibs = with python3Packages; [
         numpy
@@ -165,7 +166,7 @@ in {
     gzdoom # doom port
     sxiv # image viewer
     qtcreator
-    steam-run-native
+    # steam-run-native # it's not working at the moment cause mono won't compile :/
     xournalpp # note taking app with pen support
     gnome3.adwaita-icon-theme
     gtkwave
