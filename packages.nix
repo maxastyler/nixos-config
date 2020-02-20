@@ -62,6 +62,7 @@ in {
   environment.systemPackages = let
     myRust = ((pkgs.rustChannelOf {
       channel = "nightly";
+      date = "2020-02-15";
     }).rust.override { extensions = [ "rust-src" "rustfmt-preview" "rls-preview" ]; });
   in with pkgs; [
     #-- system stuff --#
