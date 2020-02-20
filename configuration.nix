@@ -57,11 +57,12 @@ in {
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
-  i18n = {
-    consoleFont = "Lat2-Terminus16";
-    consoleKeyMap = "uk";
-    defaultLocale = "en_GB.UTF-8";
+  console = {
+    keyMap = "uk";
+    font = "Lat2-Terminus16";
   };
+
+  i18n = { defaultLocale = "en_GB.UTF-8"; };
 
   # Set your time zone.
   time.timeZone = "Europe/London";
@@ -85,7 +86,7 @@ in {
     terminal = "screen-256color";
     customPaneNavigationAndResize = true;
     reverseSplit = true;
-    extraTmuxConf = ''
+    extraConfig = ''
       		bind-key -T copy-mode-vi 'v' send -X begin-selection
       		bind-key -T copy-mode-vi 'y' send -X copy-selection-and-cancel
           bind s split-window -c "#{pane_current_path}"
