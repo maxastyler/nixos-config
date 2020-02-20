@@ -172,6 +172,9 @@ in {
   services.emacs.enable = true;
   services.emacs.package = import ./emacs.nix { pkgs = pkgs; };
 
+  # Enable a shell caching service
+  services.lorri.enable = true;
+
   # Make users immutable
   users.mutableUsers = false;
 
