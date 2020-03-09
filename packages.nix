@@ -93,8 +93,9 @@ in {
     poppler
     emacs-all-the-icons-fonts
     #-- programming --#
+    sbcl
     direnv
-    nixfmt # formatter for nix
+    # nixfmt # formatter for nix
     imagemagick
     verilog # can remove after the verilog course
     clojure
@@ -126,6 +127,7 @@ in {
         jupyter
         jupyterlab
         python-language-server
+        sympy
         pyqtgraph
         pandas
       ];
@@ -167,6 +169,7 @@ in {
     gzdoom # doom port
     sxiv # image viewer
     qtcreator
+    dwarf-fortress-packages.dwarf-fortress-full
     # steam-run-native # it's not working at the moment cause mono won't compile :/
     xournalpp # note taking app with pen support
     gnome3.adwaita-icon-theme
