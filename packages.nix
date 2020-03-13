@@ -94,6 +94,8 @@ in {
     emacs-all-the-icons-fonts
     #-- programming --#
     sbcl
+    lispPackages.quicklisp
+    asdf
     direnv
     # nixfmt # formatter for nix
     imagemagick

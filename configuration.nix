@@ -60,9 +60,12 @@ in {
   console = {
     keyMap = "uk";
     font = "Lat2-Terminus16";
+    # useXkbConfig = true;
   };
 
-  i18n = { defaultLocale = "en_GB.UTF-8"; };
+  i18n = {
+    defaultLocale = "en_GB.UTF-8";
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/London";
@@ -151,6 +154,7 @@ in {
   # services.xserver.enable = true;
   # services.xserver.layout = "gb";
   # services.xserver.xkbOptions = "eurosign:e";
+  # services.xserver.xkbOptions = "ctrl:swapcaps"; # swap caps lock and ctrl
 
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
