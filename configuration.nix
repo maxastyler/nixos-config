@@ -14,7 +14,6 @@
   nixpkgs = {
     overlays =  [
     emacs-overlay.overlay
-    (self: super: { nix-direnv = super.nix-direnv.override { enableFlakes = true; }; } )
     ];
     config.allowUnfree = true;
   };
@@ -25,21 +24,15 @@
     keep-derivations = true
   '';
 
-  # environment.shellInit = ''
-  #   gpg-connect-agent /bye
-  #   export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-  #   export GSM_SKIP_SSH_AGENT_WORKAROUND=1
-  # '';
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  # needed for nix direnv to work
-  environment.pathsToLink = [
-    "/share/nix-direnv"
-  ];
+  # # needed for nix direnv to work
+  # environment.pathsToLink = [
+  #   "/share/nix-direnv"
+  # ];
 
   # Use latest kernel packages
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -131,8 +124,6 @@
     (firefox-wayland.override {extraNativeMessagingHosts = [passff-host];})
     libvterm
     cmake
-    direnv
-    nix-direnv
     gcc
   #  wget
   ];
