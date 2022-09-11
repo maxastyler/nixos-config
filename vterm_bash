@@ -1,5 +1,3 @@
-# allow bash to work with vterm in emacs
-
 vterm_printf(){
     if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
         # Tell tmux to pass the escape sequences through
@@ -21,7 +19,3 @@ vterm_prompt_end(){
     vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
 }
 PS1=$PS1'\[$(vterm_prompt_end)\]'
-
-# hook direnv up to bash
-
-# eval "$(direnv hook bash)"
