@@ -25,6 +25,7 @@ in {
       gcc
       nixfmt
       texmacs
+      ripgrep
     ];
 
     programs = {
