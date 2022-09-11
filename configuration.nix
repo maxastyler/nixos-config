@@ -5,16 +5,13 @@
 { config, pkgs, home-manager, emacs-overlay, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./home.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./home.nix
+  ];
 
   nixpkgs = {
-    overlays =  [
-    emacs-overlay.overlay
-    ];
+    overlays = [ emacs-overlay.overlay ];
     config.allowUnfree = true;
   };
 
@@ -38,13 +35,13 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Setup keyfile
-  boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
-  };
+  boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
 
   # Enable swap on luks
-  boot.initrd.luks.devices."luks-8f6bca92-b23b-4c20-bd5b-8b36866333ad".device = "/dev/disk/by-uuid/8f6bca92-b23b-4c20-bd5b-8b36866333ad";
-  boot.initrd.luks.devices."luks-8f6bca92-b23b-4c20-bd5b-8b36866333ad".keyFile = "/crypto_keyfile.bin";
+  boot.initrd.luks.devices."luks-8f6bca92-b23b-4c20-bd5b-8b36866333ad".device =
+    "/dev/disk/by-uuid/8f6bca92-b23b-4c20-bd5b-8b36866333ad";
+  boot.initrd.luks.devices."luks-8f6bca92-b23b-4c20-bd5b-8b36866333ad".keyFile =
+    "/crypto_keyfile.bin";
 
   networking.hostName = "cheeky-monkey"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -70,7 +67,6 @@
   # services.xserver.desktopManager.gnome.enable = true;
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
-
 
   # Configure keymap in X11
   services.xserver = {
@@ -114,7 +110,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -122,13 +117,6 @@
     git
     #  wget
   ];
-
-  services.emacs = {
-    enable = true;
-    package = with pkgs; (emacsPackagesFor emacsPgtkNativeComp).emacsWithPackages (epkgs: [epkgs.vterm epkgs.pdf-tools]);
-    defaultEditor = true;
-  };
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
