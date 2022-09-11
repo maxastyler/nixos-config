@@ -24,7 +24,9 @@ in {
       cmake
       gcc
       nixfmt
+      texmacs
     ];
+
     programs = {
       git = {
         enable = true;
