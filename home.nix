@@ -26,6 +26,7 @@ in {
       nixfmt
       texmacs
       ripgrep
+      poetry
     ];
 
     programs = {
