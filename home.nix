@@ -26,7 +26,8 @@ in {
       nixfmt
       texmacs
       ripgrep
-      poetry
+      (python310.withPackages (ps: with ps; [poetry setuptools]))
+      jetbrains.idea-ultimate
     ];
 
     programs = {

@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, home-manager, emacs-overlay, ... }:
+{ config, pkgs, home-manager, emacs-overlay, android-nixpkgs, ... }:
 
 {
   imports = [ # Include the results of the hardware scan.
@@ -107,7 +107,7 @@
   users.users.max = {
     isNormalUser = true;
     description = "Max Tyler";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "adbusers" ];
   };
 
   # List packages installed in system profile. To search, run:
@@ -130,6 +130,9 @@
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
+
+  # use adb
+  programs.adb.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
