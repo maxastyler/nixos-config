@@ -1,4 +1,4 @@
-{ config, home-manager, pkgs, ... }:
+{ config, home-manager, pkgs, android-nixpkgs, ... }:
 let
   xserverCfg = config.services.xserver;
 
@@ -26,8 +26,16 @@ in {
       nixfmt
       texmacs
       ripgrep
-      (python310.withPackages (ps: with ps; [poetry setuptools]))
+      (python310.withPackages (ps: with ps; [ poetry setuptools ]))
       jetbrains.idea-ultimate
+      (android-nixpkgs.sdk.x86_64-linux (sdkPkgs:
+        with sdkPkgs; [
+          cmdline-tools-latest
+          build-tools-32-0-0
+          platform-tools
+          platforms-android-31
+          emulator
+        ]))
     ];
 
     programs = {

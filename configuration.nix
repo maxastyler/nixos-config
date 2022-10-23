@@ -107,7 +107,7 @@
   users.users.max = {
     isNormalUser = true;
     description = "Max Tyler";
-    extraGroups = [ "networkmanager" "wheel" "adbusers" ];
+    extraGroups = [ "networkmanager" "wheel" "adbusers" "vboxusers" ];
   };
 
   # List packages installed in system profile. To search, run:
@@ -133,6 +133,19 @@
 
   # use adb
   programs.adb.enable = true;
+
+  # use virtualbox
+  virtualisation.virtualbox = {
+    host = {
+      enable = true;
+      enableExtensionPack = true;
+    };
+    # guest = {
+    #   enable = true;
+    #   x11 = true;
+    # };
+
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
