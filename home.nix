@@ -20,12 +20,17 @@ in {
       (firefox-wayland.override {
         extraNativeMessagingHosts = [ passff-host ];
       })
+      # add wine stuff
+      wineWowPackages.stable
+      winetricks
       libvterm
       cmake
       gcc
       nixfmt
       texmacs
       ripgrep
+      cinnamon.warpinator
+      ark
       (python310.withPackages (ps: with ps; [ poetry setuptools ]))
       jetbrains.idea-ultimate
       (android-nixpkgs.sdk.x86_64-linux (sdkPkgs:
