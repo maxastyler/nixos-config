@@ -31,6 +31,7 @@ in {
       ripgrep
       cinnamon.warpinator
       ark
+      guile_3_0
       (python310.withPackages (ps: with ps; [ poetry setuptools ]))
       jetbrains.idea-ultimate
       (android-nixpkgs.sdk.x86_64-linux (sdkPkgs:
