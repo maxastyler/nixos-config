@@ -32,8 +32,10 @@ in {
       cinnamon.warpinator
       ark
       guile_3_0
+      steam-run
       (python310.withPackages (ps: with ps; [ poetry setuptools ]))
       jetbrains.idea-ultimate
+      android-studio
       (android-nixpkgs.sdk.x86_64-linux (sdkPkgs:
         with sdkPkgs; [
           cmdline-tools-latest
