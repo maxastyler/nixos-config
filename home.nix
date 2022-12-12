@@ -33,9 +33,11 @@ in {
       ark
       guile_3_0
       steam-run
+      steam
       (python310.withPackages (ps: with ps; [ poetry setuptools ]))
       jetbrains.idea-ultimate
       android-studio
+      texlive.combined.scheme-full
       (android-nixpkgs.sdk.x86_64-linux (sdkPkgs:
         with sdkPkgs; [
           cmdline-tools-latest
