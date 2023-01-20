@@ -27,10 +27,10 @@ in {
       cmake
       gcc
       guile_3_0
-      jetbrains.idea-ultimate
-      ktorrent
+      jetbrains.idea-ultimate 
       ktorrent
       libvterm
+      mpv
       nixfmt
       poetry
       pyright
@@ -41,7 +41,7 @@ in {
       texmacs
       wineWowPackages.stable
       winetricks
-      texlive.combined.scheme-full
+      # texlive.combined.scheme-full
       (android-nixpkgs.sdk.x86_64-linux (sdkPkgs:
         with sdkPkgs; [
           cmdline-tools-latest
@@ -79,7 +79,7 @@ in {
       emacs = {
         enable = true;
         package = with pkgs;
-          (emacsPackagesFor emacsPgtkNativeComp).emacsWithPackages
+          (emacsPackagesFor emacsPgtk).emacsWithPackages
           (epkgs: [ epkgs.vterm epkgs.pdf-tools ]);
         defaultEditor = true;
         client.enable = true;
