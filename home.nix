@@ -21,22 +21,26 @@ in {
         extraNativeMessagingHosts = [ passff-host ];
       })
       # add wine stuff
-      wineWowPackages.stable
-      winetricks
-      libvterm
+      android-studio
+      ark
+      cinnamon.warpinator
       cmake
       gcc
-      nixfmt
-      texmacs
-      ripgrep
-      cinnamon.warpinator
-      ark
       guile_3_0
-      steam-run
-      steam
-      (python310.withPackages (ps: with ps; [ poetry setuptools ]))
       jetbrains.idea-ultimate
-      android-studio
+      ktorrent
+      ktorrent
+      libvterm
+      nixfmt
+      poetry
+      pyright
+      python311
+      racket
+      ripgrep
+      steam-run
+      texmacs
+      wineWowPackages.stable
+      winetricks
       texlive.combined.scheme-full
       (android-nixpkgs.sdk.x86_64-linux (sdkPkgs:
         with sdkPkgs; [
