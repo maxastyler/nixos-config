@@ -137,6 +137,8 @@
   # use adb
   programs.adb.enable = true;
 
+  programs.steam.enable = true;
+
   # use virtualbox
   virtualisation.virtualbox = {
     host = {
