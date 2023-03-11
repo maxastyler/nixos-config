@@ -131,7 +131,7 @@
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
-    passwordAuthentication = true;
+    settings = { PasswordAuthentication = true; };
   };
 
   # use adb
@@ -140,16 +140,32 @@
   programs.steam.enable = true;
 
   # use virtualbox
-  virtualisation.virtualbox = {
-    host = {
-      enable = true;
-      enableExtensionPack = true;
-    };
-    # guest = {
-    #   enable = true;
-    #   x11 = true;
-    # };
+  # virtualisation.virtualbox = {
+  #   host = {
+  #     enable = true;
+  #     enableExtensionPack = true;
+  #   };
+  #   # guest = {
+  #   #   enable = true;
+  #   #   x11 = true;
+  #   # };
 
+  # };
+
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_15;
+    enableTCPIP = true;
+    authentication = pkgs.lib.mkOverride 10 ''
+      local all all trust
+      host all all 127.0.0.1/32 trust
+      host all all ::1/128 trust
+    '';
+    # initialScript = pkgs.writeText "backend-initScript" ''
+    #   CREATE ROLE nixcloud WITH LOGIN PASSWORD 'nixcloud' CREATEDB;
+    #   CREATE DATABASE nixcloud;
+    #   GRANT ALL PRIVILEGES ON DATABASE nixcloud TO nixcloud;
+    # '';
   };
 
   # Open ports in the firewall.
@@ -164,6 +180,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.05"; # Did you read the comment?
+  system.stateVersion = "22.11"; # Did you read the comment?
 
 }

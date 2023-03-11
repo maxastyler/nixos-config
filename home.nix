@@ -11,10 +11,13 @@ let
     "gnome3"
   else
     "curses";
+  emacs-package = with pkgs;
+    (emacsPackagesFor emacsPgtk).emacsWithPackages
+    (epkgs: [ epkgs.vterm epkgs.pdf-tools ]);
 in {
   imports = [ home-manager.nixosModules.home-manager ];
   home-manager.users.max = {
-    home.stateVersion = "22.05";
+    home.stateVersion = "22.11";
     home.packages = with pkgs; [
       pass
       (firefox-wayland.override {
@@ -27,21 +30,26 @@ in {
       cmake
       gcc
       guile_3_0
-      jetbrains.idea-ultimate 
+      jetbrains.idea-ultimate
       ktorrent
       libvterm
+      elixir
+      emacs-package
+      cachix
       mpv
       nixfmt
       poetry
       pyright
-      python311
+      gnumake
+      (python311.withPackages (ps: with ps; [ numpy matplotlib sympy scipy ]))
       racket
       ripgrep
       steam-run
       texmacs
+      inotify-tools
       wineWowPackages.stable
       winetricks
-      # texlive.combined.scheme-full
+      texlive.combined.scheme-full
       (android-nixpkgs.sdk.x86_64-linux (sdkPkgs:
         with sdkPkgs; [
           cmdline-tools-latest
@@ -78,9 +86,7 @@ in {
     services = {
       emacs = {
         enable = true;
-        package = with pkgs;
-          (emacsPackagesFor emacsPgtk).emacsWithPackages
-          (epkgs: [ epkgs.vterm epkgs.pdf-tools ]);
+        package = emacs-package;
         defaultEditor = true;
         client.enable = true;
       };
