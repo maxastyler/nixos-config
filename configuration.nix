@@ -115,9 +115,7 @@
     description = "Max Tyler";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      (firefox.override {
-        extraNativeMessagingHosts = [passff-host]
-      })
+      (firefox.override { extraNativeMessagingHosts = [ passff-host ]; })
       pass
       libvterm
       nixfmt
