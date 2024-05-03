@@ -2,48 +2,60 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, home-manager, emacs-overlay, android-nixpkgs, ... }:
-
+{ config, nixpkgs, emacs-overlay, ... }:
+let gnome-keyring-ssh-agent-disable-overlay = final: prev: {
+  gnome = prev.gnome.overrideScope' (gfinal: gprev: {
+    gnome-keyring = gprev.gnome-keyring.overrideAttrs (oldAttrs: {
+      configureFlags = oldAttrs.configureFlags or [ ] ++ [
+        "--disable-ssh-agent"
+      ];
+    });
+  });
+};
+pkgs = nixpkgs;
+in
 {
-  imports = [ # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-    ./home.nix
-  ];
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hosts/speedy-monkey/hardware-configuration.nix
+    ];
+    
+    nixpkgs.overlays = [
+    gnome-keyring-ssh-agent-disable-overlay
+    ];
 
-  nixpkgs = {
-    overlays = [ emacs-overlay.overlay ];
-    config.allowUnfree = true;
-  };
+  # services.postgresql = {
+  #   enable = true;
+  #   ensureDatabases = [ "splitters" ];
+  #   enableTCPIP = true;
+  #   port = 5432;
+  #   authentication = pkgs.lib.mkOverride 10 ''
+  #   #...
+  #   #type database DBuser origin-address auth-method
+  #   # ipv4
+  #   host  all      all     127.0.0.1/32   trust
+  #   # ipv6
+  #   host all       all     ::1/128        trust
+  # '';
+  # };
 
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-    keep-outputs = true
-    keep-derivations = true
-  '';
+
+    # containers = {
+    #   database = import ./postgresql_container.nix;
+    # };
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  # # needed for nix direnv to work
-  # environment.pathsToLink = [
-  #   "/share/nix-direnv"
+  # So restarting doesn't hang
+  # boot.kernelParams = [
+  #   "reboot=acpi"
   # ];
 
-  # Use latest kernel packages
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  # Setup keyfile
-  boot.initrd.secrets = { "/crypto_keyfile.bin" = null; };
-
-  # Enable swap on luks
-  boot.initrd.luks.devices."luks-8f6bca92-b23b-4c20-bd5b-8b36866333ad".device =
-    "/dev/disk/by-uuid/8f6bca92-b23b-4c20-bd5b-8b36866333ad";
-  boot.initrd.luks.devices."luks-8f6bca92-b23b-4c20-bd5b-8b36866333ad".keyFile =
-    "/crypto_keyfile.bin";
-
-  networking.hostName = "cheeky-monkey"; # Define your hostname.
+  networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -57,27 +69,35 @@
   time.timeZone = "Europe/London";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_GB.utf8";
+  i18n.defaultLocale = "en_GB.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_GB.UTF-8";
+    LC_IDENTIFICATION = "en_GB.UTF-8";
+    LC_MEASUREMENT = "en_GB.UTF-8";
+    LC_MONETARY = "en_GB.UTF-8";
+    LC_NAME = "en_GB.UTF-8";
+    LC_NUMERIC = "en_GB.UTF-8";
+    LC_PAPER = "en_GB.UTF-8";
+    LC_TELEPHONE = "en_GB.UTF-8";
+    LC_TIME = "en_GB.UTF-8";
+  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  # services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.desktopManager.gnome.enable = true;
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
     layout = "gb";
     xkbVariant = "";
-    xkbOptions = "ctrl:nocaps";
   };
 
   # Configure console keymap
   console.keyMap = "uk";
-  # console.useXkbConfig = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -85,7 +105,6 @@
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
-  hardware.bluetooth.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -107,70 +126,55 @@
   users.users.max = {
     isNormalUser = true;
     description = "Max Tyler";
-    extraGroups = [ "networkmanager" "wheel" "adbusers" "vboxusers" ];
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+      firefox
+      pass
+      passff-host
+      libvterm
+      nixfmt
+    #  thunderbird
+    ];
   };
+
+  programs.direnv.enable = true;
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    git
-    #  wget
+  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+  #  wget
+	gnome3.gnome-tweaks
+	git 
+	wget
+	vim
   ];
+  
+  services.emacs = {
+  package = emacs-overlay.packages.emacs-unstable;
+  enable = true;
+  };
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
 
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  services.openssh = {
-    enable = true;
-    settings = { PasswordAuthentication = true; };
-  };
-
-  # use adb
-  programs.adb.enable = true;
-
-  programs.steam.enable = true;
-
-  # use virtualbox
-  # virtualisation.virtualbox = {
-  #   host = {
-  #     enable = true;
-  #     enableExtensionPack = true;
-  #   };
-  #   # guest = {
-  #   #   enable = true;
-  #   #   x11 = true;
-  #   # };
-
-  # };
-
-  services.postgresql = {
-    enable = true;
-    package = pkgs.postgresql_15;
-    enableTCPIP = true;
-    authentication = pkgs.lib.mkOverride 10 ''
-      local all all trust
-      host all all 127.0.0.1/32 trust
-      host all all ::1/128 trust
-    '';
-    # initialScript = pkgs.writeText "backend-initScript" ''
-    #   CREATE ROLE nixcloud WITH LOGIN PASSWORD 'nixcloud' CREATEDB;
-    #   CREATE DATABASE nixcloud;
-    #   GRANT ALL PRIVILEGES ON DATABASE nixcloud TO nixcloud;
-    # '';
-  };
+  # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 42000 42001 22 ];
-  networking.firewall.allowedUDPPorts = [ 42000 42001 22 ];
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
@@ -180,6 +184,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.11"; # Did you read the comment?
+  system.stateVersion = "23.11"; # Did you read the comment?
 
 }
