@@ -2,27 +2,15 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, nixpkgs, emacs-overlay, ... }:
-let gnome-keyring-ssh-agent-disable-overlay = final: prev: {
-  gnome = prev.gnome.overrideScope' (gfinal: gprev: {
-    gnome-keyring = gprev.gnome-keyring.overrideAttrs (oldAttrs: {
-      configureFlags = oldAttrs.configureFlags or [ ] ++ [
-        "--disable-ssh-agent"
-      ];
-    });
-  });
-};
-pkgs = nixpkgs;
-in
-{
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hosts/speedy-monkey/hardware-configuration.nix
-    ];
-    
-    nixpkgs.overlays = [
-    gnome-keyring-ssh-agent-disable-overlay
-    ];
+{ config, pkgs, emacs-overlay, ... }: {
+  imports = [ # Include the results of the hardware scan.
+    ./hosts/speedy-monkey/hardware-configuration.nix
+  ];
+
+  nixpkgs.overlays = [
+    (import ./gnome-keyring-ssh-agent-disable-overlay.nix)
+    emacs-overlay.overlays.default
+  ];
 
   # services.postgresql = {
   #   enable = true;
@@ -39,10 +27,9 @@ in
   # '';
   # };
 
-
-    # containers = {
-    #   database = import ./postgresql_container.nix;
-    # };
+  # containers = {
+  #   database = import ./postgresql_container.nix;
+  # };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -128,12 +115,14 @@ in
     description = "Max Tyler";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      firefox
+      (firefox.override {
+        extraNativeMessagingHosts = [passff-host]
+      })
       pass
-      passff-host
       libvterm
       nixfmt
-    #  thunderbird
+      nil
+      #  thunderbird
     ];
   };
 
@@ -145,19 +134,18 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-	gnome3.gnome-tweaks
-	git 
-	wget
-	vim
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
+    gnome3.gnome-tweaks
+    git
+    wget
+    vim
   ];
-  
-  services.emacs = {
-  package = emacs-overlay.packages.emacs-unstable;
-  enable = true;
-  };
 
+  services.emacs = {
+    package = pkgs.emacs-unstable;
+    enable = true;
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

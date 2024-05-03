@@ -7,18 +7,21 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    emacs-overlay = { url = "github:nix-community/emacs-overlay";
-                      inputs.nixpkgs-stable.follows = "nixpkgs";
-                    };
-  };
-
-  outputs = { self, nixpkgs, home-manager, emacs-overlay, nixos-hardware, ... }@inputs: {
-    nixosConfigurations.cheeky-monkey = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = inputs;
-      modules = [ ./configuration.nix
-                  nixos-hardware.nixosModules.lenovo-thinkpad-z13-gen2
-                ];
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs-stable.follows = "nixpkgs";
     };
   };
+
+  outputs = { self, nixpkgs, home-manager, emacs-overlay, nixos-hardware, ...
+    }@inputs: {
+      nixosConfigurations.speedy-monkey = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = inputs;
+        modules = [
+          ./configuration.nix
+          nixos-hardware.nixosModules.lenovo-thinkpad-z13-gen2
+        ];
+      };
+    };
 }
