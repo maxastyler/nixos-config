@@ -27,9 +27,9 @@
   # '';
   # };
 
-  # containers = {
-  #   database = import ./postgresql_container.nix;
-  # };
+  containers = {
+    splitter = import ./containers/splitter.nix;
+  };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -38,9 +38,9 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # So restarting doesn't hang
-  # boot.kernelParams = [
-  #   "reboot=acpi"
-  # ];
+  boot.kernelParams = [
+    "reboot=bios"
+  ];
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -115,11 +115,13 @@
     description = "Max Tyler";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      (firefox.override { extraNativeMessagingHosts = [ passff-host ]; })
+      (firefox.override { nativeMessagingHosts = [ passff-host ]; })
       pass
       libvterm
       nixfmt
       nil
+      godot_4
+      gimp
       #  thunderbird
     ];
   };
