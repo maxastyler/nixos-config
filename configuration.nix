@@ -27,6 +27,7 @@
   # '';
   # };
 
+
   containers = {
     splitter = import ./containers/splitter.nix;
   };
@@ -38,9 +39,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # So restarting doesn't hang
-  boot.kernelParams = [
-    "reboot=bios"
-  ];
+  # boot.kernelParams = [ "reboot=bios" ];
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -79,8 +78,8 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "gb";
-    xkbVariant = "";
+    xkb.layout = "gb";
+    xkb.variant = "";
   };
 
   # Configure console keymap
