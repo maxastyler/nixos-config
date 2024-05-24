@@ -3,7 +3,7 @@
   config = { pkgs, ... }: {
     system.stateVersion = "23.11";
     services.postgresql = {
-      settings = { listen_addresses = "*"; port = 5908; };
+      settings = { listen_addresses = "*"; };
       enable = true;
       enableTCPIP = true;
       authentication = pkgs.lib.mkOverride 10 ''

@@ -27,10 +27,7 @@
   # '';
   # };
 
-
-  containers = {
-    splitter = import ./containers/splitter.nix;
-  };
+  containers = { splitter = import ./containers/splitter.nix; };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -116,7 +113,6 @@
     packages = with pkgs; [
       (firefox.override { nativeMessagingHosts = [ passff-host ]; })
       pass
-      libvterm
       nixfmt
       nil
       godot_4
@@ -142,7 +138,8 @@
   ];
 
   services.emacs = {
-    package = pkgs.emacs-unstable;
+    package = ((pkgs.emacsPackagesFor pkgs.emacs-unstable).emacsWithPackages
+      (epkgs: [ epkgs.vterm epkgs.treesit-grammars.with-all-grammars ]));
     enable = true;
   };
 
