@@ -16,9 +16,15 @@
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, emacs-overlay
     , nixos-hardware, ... }@inputs: {
-      nixosConfigurations.speedy-monkey = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.speedy-monkey = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
-        specialArgs = inputs;
+        specialArgs = {
+          pkgs-unstable = import nixpkgs-unstable {
+            inherit system;
+            config.allowUnfree = true;
+          };
+          inherit emacs-overlay;
+        };
         modules = [
           ./configuration.nix
           nixos-hardware.nixosModules.lenovo-thinkpad-z13-gen2

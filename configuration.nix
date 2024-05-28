@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, emacs-overlay, ... }: {
+{ config, pkgs, emacs-overlay, pkgs-unstable, ... }: {
   imports = [ # Include the results of the hardware scan.
     ./hosts/speedy-monkey/hardware-configuration.nix
   ];
@@ -115,7 +115,7 @@
       pass
       nixfmt
       nil
-      godot_4
+      pkgs-unstable.godot_4
       gimp
       #  thunderbird
     ];
