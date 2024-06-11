@@ -1,7 +1,7 @@
 {
   inputs = {
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -11,11 +11,12 @@
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs-stable.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, emacs-overlay
-    , nixos-hardware, ... }@inputs: {
+  outputs = {nixpkgs, nixpkgs-unstable, home-manager, emacs-overlay
+    , nixos-hardware, ... }: {
       nixosConfigurations.speedy-monkey = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
         specialArgs = {
