@@ -122,6 +122,10 @@
     ];
   };
 
+  # Use nix-ld to run binaries
+  # see here: https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/programs/nix-ld.nix
+  programs.nix-ld.enable = true;
+
   programs.direnv.enable = true;
 
   # Allow unfree packages
