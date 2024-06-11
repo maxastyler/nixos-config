@@ -113,7 +113,7 @@
     packages = with pkgs; [
       (firefox.override { nativeMessagingHosts = [ passff-host ]; })
       pass
-      nixfmt
+      nixfmt-classic
       nil
       pkgs-unstable.godot_4
       gimp
