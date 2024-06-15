@@ -5,6 +5,7 @@
 { config, pkgs, emacs-overlay, pkgs-unstable, ... }: {
   imports = [ # Include the results of the hardware scan.
     ./hosts/speedy-monkey/hardware-configuration.nix
+    ./android-godot.nix
   ];
 
   nixpkgs.overlays = [
@@ -112,19 +113,20 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       (firefox.override { nativeMessagingHosts = [ passff-host ]; })
+      android-studio
       pass
       nixfmt-classic
       nil
       pkgs-unstable.godot_4
       gimp
       blender
+      steam-run
       #  thunderbird
     ];
   };
 
   # Use nix-ld to run binaries
   # see here: https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/programs/nix-ld.nix
-  programs.nix-ld.enable = true;
 
   programs.direnv.enable = true;
 
@@ -133,12 +135,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    gnome3.gnome-tweaks
-    git
-    wget
-    vim
-  ];
+  environment.systemPackages = with pkgs; [ gnome3.gnome-tweaks git wget vim ];
 
   services.emacs = {
     package = ((pkgs.emacsPackagesFor pkgs.emacs-unstable).emacsWithPackages
