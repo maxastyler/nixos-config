@@ -28,7 +28,7 @@
   # '';
   # };
 
-  containers = { splitter = import ./containers/splitter.nix; };
+  # containers = { splitter = import ./containers/splitter.nix; };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -121,6 +121,8 @@
       gimp
       blender
       steam-run
+      poetry
+      pyright
       #  thunderbird
     ];
   };
