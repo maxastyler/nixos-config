@@ -124,6 +124,7 @@
       poetry
       pyright
       #  thunderbird
+      texlive.combined.scheme-full
     ];
   };
 
