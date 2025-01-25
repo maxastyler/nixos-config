@@ -110,7 +110,7 @@
   users.users.max = {
     isNormalUser = true;
     description = "Max Tyler";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" ];
     packages = with pkgs; [
       (firefox.override { nativeMessagingHosts = [ passff-host ]; })
       android-studio
