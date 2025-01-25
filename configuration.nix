@@ -87,8 +87,6 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -137,7 +135,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [ gnome3.gnome-tweaks git wget vim ];
+  environment.systemPackages = with pkgs; [ gnome-tweaks git wget vim ];
 
   services.emacs = {
     package = ((pkgs.emacsPackagesFor pkgs.emacs-unstable).emacsWithPackages
