@@ -108,7 +108,7 @@
   users.users.max = {
     isNormalUser = true;
     description = "Max Tyler";
-    extraGroups = [ "networkmanager" "wheel" "dialout" ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" "plugdev" ];
     packages = with pkgs; [
       (firefox.override { nativeMessagingHosts = [ passff-host ]; })
       android-studio
@@ -124,6 +124,35 @@
       #  thunderbird
     ];
   };
+
+  # add a udev rule for plugdev
+
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", \
+        ATTRS{idVendor}=="2e8a", \
+        ATTRS{idProduct}=="0003", \
+        TAG+="uaccess" \
+        MODE="660", \
+        GROUP="plugdev"
+    SUBSYSTEM=="usb", \
+        ATTRS{idVendor}=="2e8a", \
+        ATTRS{idProduct}=="0009", \
+        TAG+="uaccess" \
+        MODE="660", \
+        GROUP="plugdev"
+    SUBSYSTEM=="usb", \
+        ATTRS{idVendor}=="2e8a", \
+        ATTRS{idProduct}=="000a", \
+        TAG+="uaccess" \
+        MODE="660", \
+        GROUP="plugdev"
+    SUBSYSTEM=="usb", \
+        ATTRS{idVendor}=="2e8a", \
+        ATTRS{idProduct}=="000f", \
+        TAG+="uaccess" \
+        MODE="660", \
+        GROUP="plugdev"
+  '';
 
   # Use nix-ld to run binaries
   # see here: https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/programs/nix-ld.nix
