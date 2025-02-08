@@ -84,7 +84,11 @@
   console.keyMap = "uk";
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  # use hplipWithPlugin for hp printer
+  services.printing = {
+  enable = true;
+  drivers = [ pkgs.hplipWithPlugin ];
+ };
 
   # Enable sound with pipewire.
   security.rtkit.enable = true;
@@ -108,7 +112,7 @@
   users.users.max = {
     isNormalUser = true;
     description = "Max Tyler";
-    extraGroups = [ "networkmanager" "wheel" "dialout" "plugdev" ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" ];
     packages = with pkgs; [
       (firefox.override { nativeMessagingHosts = [ passff-host ]; })
       android-studio
@@ -133,21 +137,25 @@
         ATTRS{idProduct}=="0003", \
         TAG+="uaccess" \
         MODE="660", \
+        GROUP="dialout"
     SUBSYSTEM=="usb", \
         ATTRS{idVendor}=="2e8a", \
         ATTRS{idProduct}=="0009", \
         TAG+="uaccess" \
         MODE="660", \
+        GROUP="dialout"
     SUBSYSTEM=="usb", \
         ATTRS{idVendor}=="2e8a", \
         ATTRS{idProduct}=="000a", \
         TAG+="uaccess" \
         MODE="660", \
+        GROUP="dialout"
     SUBSYSTEM=="usb", \
         ATTRS{idVendor}=="2e8a", \
         ATTRS{idProduct}=="000f", \
         TAG+="uaccess" \
         MODE="660", \
+        GROUP="dialout"
   '';
 
   # Use nix-ld to run binaries
