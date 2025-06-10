@@ -86,9 +86,9 @@
   # Enable CUPS to print documents.
   # use hplipWithPlugin for hp printer
   services.printing = {
-  enable = true;
-  drivers = [ pkgs.hplipWithPlugin ];
- };
+    enable = true;
+    drivers = [ pkgs.hplipWithPlugin ];
+  };
 
   # Enable sound with pipewire.
   security.rtkit.enable = true;
@@ -112,14 +112,14 @@
   users.users.max = {
     isNormalUser = true;
     description = "Max Tyler";
-    extraGroups = [ "networkmanager" "wheel" "dialout" ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" "plugdev" ];
     packages = with pkgs; [
       (firefox.override { nativeMessagingHosts = [ passff-host ]; })
       android-studio
       pass
       nixfmt-classic
       nil
-      pkgs-unstable.godot_4
+      # pkgs-unstable.godot_4
       gimp
       blender
       steam-run
@@ -127,6 +127,17 @@
       pyright
       #  thunderbird
     ];
+  };
+
+  # add steam
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall =
+      true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall =
+      true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall =
+      true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
 
   # add a udev rule for plugdev
@@ -157,6 +168,14 @@
         MODE="660", \
         GROUP="dialout"
   '';
+
+  services.udev.packages = [
+    (pkgs.writeTextFile {
+      name = "probe_rs_rules";
+      text = (builtins.readFile ./probe_rs_udev_rules);
+      destination = "/etc/udev/rules.d/69-probe-rs.rules";
+    })
+  ];
 
   # Use nix-ld to run binaries
   # see here: https://github.com/NixOS/nixpkgs/blob/nixos-unstable/nixos/modules/programs/nix-ld.nix

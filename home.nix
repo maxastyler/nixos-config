@@ -41,7 +41,6 @@ in {
       poetry
       pyright
       gnumake
-      (python311.withPackages (ps: with ps; [ numpy matplotlib sympy scipy ]))
       racket
       ripgrep
       steam-run
